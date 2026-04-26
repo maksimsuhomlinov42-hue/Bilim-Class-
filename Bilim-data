@@ -1,77 +1,147 @@
 <style>
-    /* Базовые настройки для всего блока */
-    .bilim-wrapper {
-        all: initial; /* Сброс стилей Google Сайта */
-        display: block;
-        font-family: 'Segoe UI', sans-serif;
-        background: #000;
+    /* 1. БАЗОВЫЕ НАСТРОЙКИ iOS 26 */
+    :root {
+        --ios-green: #28cd41;
+        --ios-white: #ffffff;
+        --glass-bg: rgba(255, 255, 255, 0.7);
+        --radius: 35px; /* Мягкие углы iOS */
+    }
+
+    .bilim-app {
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
         padding: 20px;
-        border-radius: 40px;
-        color: #fff;
-    }
-
-    /* Жидкое стекло для контейнера */
-    .glass-card {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(20px) saturate(160%);
-        -webkit-backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 40px;
-        padding: 25px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    }
-
-    /* Таймер с черными цифрами в белом стекле */
-    .timer-pill {
-        background: rgba(255, 255, 255, 0.9);
-        border-radius: 30px;
-        padding: 15px;
-        text-align: center;
-        margin-bottom: 20px;
-    }
-
-    .timer-pill span {
+        min-height: 500px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
         color: #000;
-        font-size: 32px;
-        font-weight: 900;
     }
 
-    /* Плавные карточки уроков */
-    .lesson {
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 25px;
+    /* 2. МНОГОСЛОЙНОЕ ЖИДКОЕ СТЕКЛО */
+    .liquid-glass {
+        position: relative;
+        background: var(--glass-bg);
+        /* Слой 1: Размытие */
+        backdrop-filter: blur(35px) saturate(200%);
+        -webkit-backdrop-filter: blur(35px);
+        
+        /* Слой 2: Граница и форма */
+        border-radius: var(--radius);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        
+        /* Слой 3: Объемная тень */
+        box-shadow: 
+            0 15px 35px rgba(0,0,0,0.05),
+            inset 0 0 15px rgba(255,255,255,0.5);
+        
+        padding: 20px;
+        overflow: hidden;
+    }
+
+    /* Эффект глянцевого блика поверх стекла */
+    .liquid-glass::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+        pointer-events: none;
+    }
+
+    /* 3. ДИЗАЙН КНОПОК И РАСПИСАНИЯ */
+    .ios-header {
+        font-size: 28px;
+        font-weight: 700;
+        color: #1d1d1f;
+        margin-bottom: 10px;
+    }
+
+    .schedule-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
         padding: 15px;
-        margin: 10px 0;
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.4);
+        margin-bottom: 10px;
+        border-radius: 20px;
+        border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .status-dot {
+        width: 10px;
+        height: 10px;
+        background: var(--ios-green);
+        border-radius: 50%;
+        box-shadow: 0 0 10px var(--ios-green);
+    }
+
+    .ios-button {
+        background: var(--ios-green);
+        color: white;
+        border: none;
+        padding: 15px 25px;
+        border-radius: 20px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.2s;
+        box-shadow: 0 8px 20px rgba(40, 205, 65, 0.3);
+    }
+
+    .ios-button:active {
+        transform: scale(0.95);
+    }
+
+    /* 4. ТАЙМЕР */
+    .timer-display {
+        font-size: 48px;
+        font-weight: 200; /* Тонкий шрифт в стиле iOS */
+        text-align: center;
+        margin: 20px 0;
+        letter-spacing: -1px;
     }
 </style>
 
-<div class="bilim-wrapper">
-    <div class="glass-card">
-        <div class="timer-pill">
-            <span id="live-clock">00:00:00</span>
-        </div>
+<div class="bilim-app">
+    <div class="liquid-glass">
+        <div class="ios-header">BilimClass</div>
         
-        <div class="lesson">
-            <strong>Математика</strong><br>
-            <small>Кабинет 204</small>
+        <div class="timer-display" id="main-timer">00:00:00</div>
+
+        <div id="schedule-list">
+            <div class="schedule-item">
+                <div>
+                    <strong>Информатика</strong><br>
+                    <small>09:00 - 09:45</small>
+                </div>
+                <div class="status-dot"></div>
+            </div>
+            
+            <div class="schedule-item">
+                <div>
+                    <strong>Робототехника</strong><br>
+                    <small>10:00 - 10:45</small>
+                </div>
+                <div style="opacity: 0.3" class="status-dot"></div>
+            </div>
         </div>
-        <div class="lesson">
-            <strong>Русский язык</strong><br>
-            <small>Кабинет 310</small>
+
+        <div style="display: flex; gap: 10px; margin-top: 20px;">
+            <button class="ios-button" onclick="alert('Домашнее задание')">Задания</button>
+            <button class="ios-button" style="background: white; color: var(--ios-green); border: 1px solid var(--ios-green);">Чат</button>
         </div>
     </div>
 </div>
 
 <script>
-    // Скрипт часов прямо внутри файла
-    function startClock() {
-        const clockEl = document.getElementById('live-clock');
-        if (clockEl) {
-            setInterval(() => {
-                clockEl.innerText = new Date().toLocaleTimeString('ru-RU');
-            }, 1000);
-        }
+    // Оживление таймера
+    function updateTime() {
+        const now = new Date();
+        document.getElementById('main-timer').innerText = now.toLocaleTimeString('ru-RU');
     }
-    startClock();
+    setInterval(updateTime, 1000);
+    updateTime();
 </script>
