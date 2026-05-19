@@ -2,281 +2,360 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>BilimClass AI Edition</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BilimClass - Расписание</title>
     <style>
-        :root {
-            --ios-green: #34c759;
-            --glass-white: rgba(255, 255, 255, 0.4);
-            --glass-deep: rgba(255, 255, 255, 0.7);
-            --neo-shadow: 0 10px 30px rgba(0,0,0,0.05);
-        }
-
+        /* БАЗОВЫЕ НАСТРОЙКИ СТРАНИЦЫ */
         body {
             margin: 0;
-            padding: 15px;
-            padding-bottom: 110px;
-            font-family: -apple-system, system-ui, sans-serif;
-            background: #f0f2f5; /* Можно заменить на картинку, код останется прозрачным */
-            background: transparent !important;
+            padding: 20px;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e1b4b, #2e1065);
+            min-height: 100vh;
+            color: #f8fafc;
             display: flex;
             justify-content: center;
-            overflow-x: hidden;
+            align-items: center;
+            box-sizing: border-box;
         }
 
-        .app-container {
+        /* 🔮 ПРОФЕССИОНАЛЬНОЕ МАТОВОЕ СТЕКЛО (ГЛАССМОРФИЗМ) */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 30px;
             width: 100%;
-            max-width: 420px;
-            animation: zoomIn 0.6s ease;
+            max-width: 650px;
+            box-shadow: 
+                inset 1px 1px 2px rgba(255, 255, 255, 0.05),
+                0 20px 50px rgba(0, 0, 0, 0.3);
+            animation: panelAppear 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        /* Общие компоненты */
-        .content-card {
-            background: var(--glass-white);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border-radius: 30px;
-            padding: 20px;
-            min-height: 400px;
-            border: 1px solid rgba(255,255,255,0.4);
-            box-shadow: var(--neo-shadow);
+        @keyframes panelAppear {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) scale(0.98);
+                filter: blur(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                filter: blur(0);
+            }
         }
 
-        /* Стили ЧАТА */
-        #chat-container {
-            height: 320px;
-            overflow-y: auto;
+        /* ВЕРХНИЙ ТУЛБАР */
+        .toolbar {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 25px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 20px;
+        }
+
+        .toolbar-row {
+            display: flex;
+            gap: 15px;
+            width: 100%;
+        }
+
+        .select-wrapper {
+            flex: 1;
+        }
+
+        label {
+            display: block;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+            cursor: pointer;
+            appearance: none;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        select:focus {
+            background: rgba(255, 255, 255, 0.07);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .days-tabs {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 5px 2px;
+        }
+
+        .days-tabs::-webkit-scrollbar { height: 0px; }
+
+        /* 💧 КНОПКИ-КАПЛИ С ЭФФЕКТОМ ЖИДКОГО СТЕКЛА */
+        .tab-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 12px 18px;
+            border-radius: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            white-space: nowrap;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                        background 0.3s, border-color 0.3s, box-shadow 0.4s, color 0.3s;
+            transform-origin: center bottom;
+        }
+
+        .tab-btn:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Физическое сплющивание жидкого стекла при нажатии */
+        .tab-btn:active {
+            transform: scale(1.06, 0.88); 
+            background: rgba(255, 255, 255, 0.01);
+            border-color: rgba(255, 255, 255, 0.05);
+            box-shadow: 
+                inset 4px 4px 8px rgba(0, 0, 0, 0.5), 
+                inset -4px -4px 8px rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.4);
+            transition: transform 0.08s ease-out, box-shadow 0.08s ease-out;
+        }
+
+        /* Скрытый неоморфизм: мягкое вдавливание активной вкладки */
+        .tab-btn.active {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.25);
+            color: #fff;
+            box-shadow: 
+                inset 1px 1px 2px rgba(255, 255, 255, 0.2),
+                0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* 🌪️ ЭФФЕКТ СКРЕТЧИНГА ПРИ ОБНОВЛЕНИИ */
+        .scratch-effect {
+            animation: scratch 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        @keyframes scratch {
+            0% {
+                opacity: 0;
+                transform: scale(0.95) translateY(15px);
+                filter: blur(6px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+                filter: blur(0);
+            }
+        }
+
+        /* БЛОК С РАСПИСАНИЕМ */
+        .schedule-content {
+            margin-top: 20px;
+        }
+
+        .schedule-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 15px;
-            padding: 10px;
+        }
+
+        .schedule-header h2 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .lessons-count {
+            font-size: 12px;
+            background: rgba(255, 255, 255, 0.06);
+            padding: 4px 12px;
+            border-radius: 20px;
+            color: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .lessons-list {
             display: flex;
             flex-direction: column;
             gap: 10px;
         }
 
-        .msg {
-            padding: 12px 16px;
-            border-radius: 18px;
-            max-width: 80%;
-            font-size: 0.9rem;
-            line-height: 1.4;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .ai-msg {
-            background: rgba(255, 255, 255, 0.8);
-            align-self: flex-start;
-            border-bottom-left-radius: 5px;
-            color: #333;
-        }
-
-        .user-msg {
-            background: var(--ios-green);
-            color: white;
-            align-self: flex-end;
-            border-bottom-right-radius: 5px;
-        }
-
-        .ai-input-wrapper {
+        .lesson-item {
             display: flex;
-            gap: 10px;
-            background: rgba(255, 255, 255, 0.6);
-            padding: 8px;
-            border-radius: 20px;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            padding: 14px 18px;
+            border-radius: 14px;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.2s;
         }
 
-        #ai-input {
+        .lesson-item:hover {
+            transform: translateX(6px) scale(1.01);
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .lesson-num {
+            font-size: 14px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.25);
+            width: 30px;
+        }
+
+        .lesson-info {
             flex: 1;
-            border: none;
-            background: none;
-            padding: 10px;
-            outline: none;
-            font-size: 0.9rem;
         }
 
-        .send-btn {
-            background: var(--ios-green);
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            color: white;
-            cursor: pointer;
+        .lesson-name {
+            font-weight: 500;
+            font-size: 15px;
+            margin-bottom: 2px;
         }
 
-        /* Остальные стили из твоего кода */
-        .week-header { background: var(--glass-deep); backdrop-filter: blur(15px); padding: 15px; border-radius: 20px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; font-weight: 800; }
-        .days-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; margin-bottom: 20px; }
-        .day-btn { background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.3); height: 45px; border-radius: 12px; font-weight: 800; font-size: 0.65rem; }
-        .day-btn.active { background: var(--ios-green); color: white; }
-        .lesson-node { display: flex; align-items: center; background: rgba(255, 255, 255, 0.8); padding: 15px; border-radius: 20px; margin-bottom: 10px; }
-        
-        .bottom-nav { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 95%; max-width: 400px; height: 75px; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); border-radius: 25px; display: flex; justify-content: space-around; align-items: center; z-index: 10000; border: 1px solid rgba(255,255,255,0.5); }
-        .nav-item { border: none; background: none; color: #999; font-weight: 900; font-size: 0.6rem; display: flex; flex-direction: column; align-items: center; gap: 4px; }
-        .nav-item.active { color: var(--ios-green); }
-
-        .screen { display: none; }
-        .screen.active { display: block; }
-        
-        .timer-box { background: rgba(255, 255, 255, 0.7); margin-bottom: 15px; padding: 15px; border-radius: 20px; }
-        .timer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; text-align: center; }
-        .time-part b { display: block; font-size: 1.2rem; color: var(--ios-green); }
+        .lesson-time {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.35);
+        }
     </style>
 </head>
 <body>
 
-<div class="app-container">
-    
-    <div id="screen-sch" class="screen active">
-        <div class="week-header">
-            <button onclick="moveWeek(-1)" style="border:none; background:none; font-size:1.5rem;">‹</button>
-            <span id="date-label">Загрузка...</span>
-            <button onclick="moveWeek(1)" style="border:none; background:none; font-size:1.5rem;">›</button>
-        </div>
-        <div class="days-grid" id="days-buttons">
-            <button class="day-btn" id="d1" onclick="setDay(1)">ПН</button>
-            <button class="day-btn" id="d2" onclick="setDay(2)">ВТ</button>
-            <button class="day-btn" id="d3" onclick="setDay(3)">СР</button>
-            <button class="day-btn" id="d4" onclick="setDay(4)">ЧТ</button>
-            <button class="day-btn" id="d5" onclick="setDay(5)">ПТ</button>
-            <button class="day-btn" id="d6" onclick="setDay(6)">СБ</button>
-            <button class="day-btn" id="d0" onclick="setDay(0)">ВС</button>
-        </div>
-        <div id="schedule-box" class="content-card"></div>
-    </div>
+    <div class="glass-panel">
+        <div class="toolbar">
+            <!-- Первая строчка: Выбор года до 2027 -->
+            <div class="toolbar-row">
+                <div class="select-wrapper">
+                    <label>Учебный Год</label>
+                    <select id="yearSelect" onchange="triggerScratch()">
+                        <option value="2026">2025 - 2026 год</option>
+                        <option value="2027" selected>2026 - 2027 год</option>
+                    </select>
+                </div>
+                
+                <!-- Выбор недели на год (34 недели) -->
+                <div class="select-wrapper">
+                    <label>Учебная неделя</label>
+                    <select id="weekSelect" onchange="triggerScratch()">
+                        <!-- Генерируется через скрипт ниже -->
+                    </select>
+                </div>
+            </div>
 
-    <div id="screen-tim" class="screen">
-        <div class="content-card">
-            <h3 style="text-align:center; margin-top:0;">События ⏳</h3>
-            <div class="timer-box">
-                <small>КОНЕЦ УЧЕБЫ (25 МАЯ)</small>
-                <div class="timer-grid"><div class="time-part"><b id="d25">0</b><span>дн</span></div><div class="time-part"><b id="h25">0</b><span>ч</span></div><div class="time-part"><b id="m25">0</b><span>м</span></div><div class="time-part"><b id="s25">0</b><span>с</span></div></div>
-            </div>
-            <div class="timer-box">
-                <small>ВЫПУСКНОЙ (23 МАЯ)</small>
-                <div class="timer-grid"><div class="time-part"><b id="d23">0</b><span>дн</span></div><div class="time-part"><b id="h23">0</b><span>ч</span></div><div class="time-part"><b id="m23">0</b><span>м</span></div><div class="time-part"><b id="s23">0</b><span>с</span></div></div>
-            </div>
-            <div class="timer-box">
-                <small>МОДО (13 МАЯ)</small>
-                <div class="timer-grid"><div class="time-part"><b id="d13">0</b><span>дн</span></div><div class="time-part"><b id="h13">0</b><span>ч</span></div><div class="time-part"><b id="m13">0</b><span>м</span></div><div class="time-part"><b id="s13">0</b><span>с</span></div></div>
+            <!-- Вторая строчка: Дни с Понедельника по Субботу -->
+            <div>
+                <label>День недели</label>
+                <div class="days-tabs" id="daysContainer">
+                    <button class="tab-btn active" onclick="changeDay(0, this)">Пон</button>
+                    <button class="tab-btn" onclick="changeDay(1, this)">Вто</button>
+                    <button class="tab-btn" onclick="changeDay(2, this)">Сре</button>
+                    <button class="tab-btn" onclick="changeDay(3, this)">Чет</button>
+                    <button class="tab-btn" onclick="changeDay(4, this)">Пят</button>
+                    <button class="tab-btn" onclick="changeDay(5, this)">Суб</button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div id="screen-ai" class="screen">
-        <div class="content-card">
-            <h3 style="margin-top:0;">Bilim AI 🤖</h3>
-            <div id="chat-container">
-                <div class="msg ai-msg">Привет! Я твой школьный ассистент. Спроси меня: "Что в понедельник?" или "Сколько до МОДО?"</div>
+        <!-- Контент с уроками -->
+        <div class="schedule-content scratch-effect" id="scheduleBox">
+            <div class="schedule-header">
+                <h2 id="currentDayTitle">Понедельник</h2>
+                <div class="lessons-count" id="lessonsCount">6 уроков</div>
             </div>
-            <div class="ai-input-wrapper">
-                <input type="text" id="ai-input" placeholder="Ваш вопрос...">
-                <button class="send-btn" onclick="askAI()">></button>
+            <div class="lessons-list" id="lessonsList">
+                <!-- Рендерится из JS -->
             </div>
         </div>
     </div>
 
-    <nav class="bottom-nav">
-        <button class="nav-item active" id="btn-sch" onclick="showScreen('sch')"><span>📅</span><span>ГРАФИК</span></button>
-        <button class="nav-item" id="btn-ai" onclick="showScreen('ai')"><span>🤖</span><span>BILIM AI</span></button>
-        <button class="nav-item" id="btn-tim" onclick="showScreen('tim')"><span>⏳</span><span>СРОКИ</span></button>
-    </nav>
+    <script>
+        // Данные: Пн и Ср по 6 уроков, остальные по 5
+        const lessonsData = {
+            0: { name: "Понедельник", count: 6, list: ["Математика", "Казахский язык", "Русский язык", "Естествознание", "Цифровая грамотность", "Литературное чтение"] },
+            1: { name: "Вторник", count: 5, list: ["Английский язык", "Математика", "Познание мира", "Художественный труд", "Физическая культура"] },
+            2: { name: "Среда", count: 6, list: ["Казахский язык", "Математика", "Русский язык", "Музыка", "Литературное чтение", "Самопознание"] },
+            3: { name: "Четверг", count: 5, list: ["Математика", "Русский язык", "Естествознание", "Казахский язык", "Физическая культура"] },
+            4: { name: "Пятница", count: 5, list: ["Информатика", "Английский язык", "Литературное чтение", "Математика", "Физическая культура"] },
+            5: { name: "Суббота", count: 5, list: ["Олимпиада", "Проектная деятельность", "Шахматы", "Логика", "Робототехника"] }
+        };
 
-</div>
+        const timeSlots = ["08:00 - 08:45", "08:55 - 09:40", "09:55 - 10:40", "10:55 - 11:40", "11:55 - 12:40", "12:50 - 13:35"];
 
-<script>
-    let weekStart = new Date();
-    const dNow = weekStart.getDay();
-    weekStart.setDate(weekStart.getDate() - (dNow === 0 ? 6 : dNow - 1));
-
-    const lessons = {
-        1: [{n:"Математика", t:"12:55", e:"📐"}, {n:"Русский яз.", t:"13:40", e:"📖"}, {n:"Физкультура", t:"14:30", e:"⚽"}, {n:"Музыка", t:"15:25", e:"🎼"}, {n:"ИЗО", t:"16:15", e:"🎨"}],
-        2: [{n:"Математика", t:"12:55", e:"📐"}, {n:"Английский", t:"13:40", e:"🔤"}, {n:"Лит. чтение", t:"14:30", e:"📚"}, {n:"Казахский", t:"15:25", e:"🇰🇿"}],
-        3: [{n:"Русский яз.", t:"12:10", e:"📖"}, {n:"Цифр. грам.", t:"12:55", e:"💻"}, {n:"Математика", t:"13:40", e:"📐"}, {n:"Казахский", t:"14:30", e:"🇰🇿"}],
-        4: [{n:"Русский яз.", t:"12:55", e:"📖"}, {n:"Математика", t:"13:40", e:"📐"}, {n:"Английский", t:"14:30", e:"🔤"}],
-        5: [{n:"Русский яз.", t:"12:10", e:"📖"}, {n:"Математика", t:"12:55", e:"📐"}, {n:"Трудовое обуч.", t:"15:25", e:"🛠️"}],
-        6: [], 0: []
-    };
-
-    function showScreen(type) {
-        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-        document.getElementById('screen-' + type).classList.add('active');
-        document.getElementById('btn-' + type).classList.add('active');
-    }
-
-    function setDay(day) {
-        document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
-        if(document.getElementById('d' + day)) document.getElementById('d' + day).classList.add('active');
-        
-        const box = document.getElementById('schedule-box');
-        const list = lessons[day];
-        let h = `<h3>${['Воскресенье','Понедельник','Вторник','Среда','Четверг','Пятница','Суббота'][day]}</h3>`;
-        
-        if (!list || list.length === 0) h += "<p>Свободный день! ✨</p>";
-        else {
-            list.forEach(l => {
-                h += `<div class="lesson-node animate__animated animate__fadeInLeft">
-                    <span style="font-size:1.5rem; margin-right:15px">${l.e}</span>
-                    <div><b>${l.n}</b><br><small style="color:var(--ios-green)">${l.t}</small></div>
-                </div>`;
-            });
+        // Наполнение селектора недель (от 1 до 34)
+        const weekSelect = document.getElementById('weekSelect');
+        for (let i = 1; i <= 34; i++) {
+            let opt = document.createElement('option');
+            opt.value = i;
+            opt.innerText = `Неделя ${i}`;
+            if(i === 1) opt.selected = true;
+            weekSelect.appendChild(opt);
         }
-        box.innerHTML = h;
-    }
 
-    // ЛОГИКА ИИ
-    function askAI() {
-        const input = document.getElementById('ai-input');
-        const chat = document.getElementById('chat-container');
-        const query = input.value.toLowerCase();
-        if(!query) return;
+        // Вывод списка уроков на экран
+        function renderSchedule(dayIdx) {
+            const dayData = lessonsData[dayIdx];
+            document.getElementById('currentDayTitle').innerText = dayData.name;
+            document.getElementById('lessonsCount').innerText = `${dayData.count} уроков`;
 
-        chat.innerHTML += `<div class="msg user-msg">${input.value}</div>`;
-        input.value = "";
+            const listContainer = document.getElementById('lessonsList');
+            listContainer.innerHTML = '';
 
-        let reply = "Хмм, я пока не знаю ответа на это. Попробуй спросить про уроки!";
-        
-        if(query.includes("привет")) reply = "Привет! Я Bilim AI. Чем помочь?";
-        else if(query.includes("понедельник")) reply = "В понедельник 5 уроков. Первый - Математика в 12:55.";
-        else if(query.includes("вторник")) reply = "Во вторник 4 урока. Не забудь Английский!";
-        else if(query.includes("модо")) reply = "МОДО начнется 13 мая. У тебя осталось немного времени на подготовку!";
-        else if(query.includes("выпускной")) reply = "Выпускной уже 23 мая! Будет круто!";
-        else if(query.includes("урок") || query.includes("расписание")) reply = "Ты можешь посмотреть полное расписание во вкладке 'График'.";
-
-        setTimeout(() => {
-            chat.innerHTML += `<div class="msg ai-msg">${reply}</div>`;
-            chat.scrollTop = chat.scrollHeight;
-        }, 600);
-    }
-
-    function updateUI() {
-        const opt = { day: 'numeric', month: 'short' };
-        const end = new Date(weekStart); end.setDate(weekStart.getDate()+6);
-        document.getElementById('date-label').innerText = `${weekStart.toLocaleDateString('ru', opt)} - ${end.toLocaleDateString('ru', opt)}`;
-        setDay(new Date().getDay());
-    }
-
-    function moveWeek(dir) { weekStart.setDate(weekStart.getDate() + (dir * 7)); updateUI(); }
-    
-    function runTimers() {
-        const dates = { "25": 'May 25, 2026', "23": 'May 23, 2026', "13": 'May 13, 2026' };
-        for (let k in dates) {
-            const diff = new Date(dates[k]).getTime() - new Date().getTime();
-            if (diff > 0) {
-                document.getElementById('d'+k).innerText = Math.floor(diff/86400000);
-                document.getElementById('h'+k).innerText = Math.floor((diff%86400000)/3600000);
-                document.getElementById('m'+k).innerText = Math.floor((diff%3600000)/60000);
-                document.getElementById('s'+k).innerText = Math.floor((diff%60000)/1000);
+            for (let i = 0; i < dayData.count; i++) {
+                const item = document.createElement('div');
+                item.className = 'lesson-item';
+                item.style.animationDelay = `${i * 0.04}s`;
+                item.innerHTML = `
+                    <div class="lesson-num">${i + 1}</div>
+                    <div class="lesson-info">
+                        <div class="lesson-name">${dayData.list[i]}</div>
+                        <div class="lesson-time">${timeSlots[i]}</div>
+                    </div>
+                `;
+                listContainer.appendChild(item);
             }
         }
-    }
 
-    setInterval(runTimers, 1000);
-    updateUI();
-    
-    // Enter для ИИ
-    document.getElementById('ai-input').addEventListener('keypress', (e) => { if(e.key === 'Enter') askAI(); });
-</script>
+        // Клик по дням недели
+        function changeDay(idx, btn) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderSchedule(idx);
+            triggerScratch();
+        }
+
+        // Запуск скретчинг-эффекта появления
+        function triggerScratch() {
+            const box = document.getElementById('scheduleBox');
+            box.classList.remove('scratch-effect');
+            void box.offsetWidth; 
+            box.classList.add('scratch-effect');
+        }
+
+        // Первичный запуск при старте страницы
+        renderSchedule(0);
+    </script>
 </body>
 </html>
