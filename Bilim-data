@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BilimClass - Умное Расписание с Датами</title>
+    <title>Умное Расписание с Датами</title>
     <style>
         html, body {
             margin: 0;
@@ -64,29 +64,12 @@
 
         /* ✈️ НЕОМОРФНЫЙ ЛЕТАЮЩИЙ САМОЛЁТИК */
         .airplane-container {
-            font-size: 40px;
-            margin-bottom: -10px;
+            font-size: 45px;
+            margin-top: 10px;
+            margin-bottom: 20px;
             filter: drop-shadow(5px 5px 5px #cbdacb);
             animation: airplaneFly 4s ease-in-out infinite alternate;
             user-select: none;
-        }
-
-        /* ✨ ЗАКРУГЛЕННЫЙ ЗАГОЛОВОК С ЗОЛОТЫМ СИЯНИЕМ */
-        .shining-text {
-            font-size: clamp(26px, 4.5vw, 48px); 
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: clamp(2px, 0.8vw, 6px);
-            margin: 10px 0 5px 0;
-            text-align: center;
-            user-select: none;
-            background: linear-gradient(to right, #b45309 0%, #f59e0b 25%, #fef08a 50%, #f59e0b 75%, #b45309 100%);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.05));
-            animation: goldShine 3s linear infinite;
         }
 
         /* 🎛️ ПАНЕЛЬ УПРАВЛЕНИЯ НЕДЕЛЯМИ */
@@ -266,7 +249,6 @@
             50% { border-radius: 40px 35px 45px 35px; transform: rotateX(0deg) rotateY(0deg) skewX(0deg) translateY(-3px); }
             100% { border-radius: 35px 50px 30px 45px; transform: rotateX(-2deg) rotateY(2deg) skewX(1deg) translateY(3px); }
         }
-        @keyframes goldShine { 0% { background-position: 200% center; } 100% { background-position: 0% center; } }
         @keyframes airplaneFly {
             0% { transform: translateY(0) translateX(-5px) rotate(0deg); }
             100% { transform: translateY(-8px) translateX(5px) rotate(3deg); }
@@ -285,8 +267,6 @@
         <div class="content-layer">
             <!-- Летающий самолётик -->
             <div class="airplane-container">✈️</div>
-            
-            <h1 class="shining-text">Bilim Class</h1>
             
             <!-- Панель недель -->
             <div class="neumorphic-controls">
