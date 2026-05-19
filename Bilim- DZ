@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Умное Расписание с ДЗ</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            background: #edf4f2 !important; /* Мягкая неоморфная основа */
+            overflow-x: hidden;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            box-sizing: border-box;
+        }
+
+        /* 🌊 АДАПТИВНЫЙ КОНТЕЙНЕР-ФЛАГ */
+        .wave-wrapper {
+            position: relative;
+            width: 95vw;
+            margin: 20px auto;
+            padding: 20px;
+            box-sizing: border-box;
+            perspective: 1000px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* 🟢 ЖИДКИЙ ЗАДНИЙ ФОН */
+        .liquid-flag-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(74, 222, 128, 0.4), rgba(34, 197, 94, 0.2));
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border-radius: 30px;
+            border: 2.5px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 
+                inset 0 0 30px rgba(255, 255, 255, 0.5),
+                0 15px 35px rgba(34, 197, 94, 0.08);
+            animation: flagWaveAnimation 12s ease-in-out infinite alternate;
+            z-index: 1;
+        }
+
+        /* 👑 СЛОЙ КОНТЕНТА */
+        .content-layer {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: flagWaveAnimation 12s ease-in-out infinite alternate;
+        }
+
+        /* ✈️ НЕОМОРФНЫЙ ЛЕТАЮЩИЙ САМОЛЁТИК */
+        .airplane-container {
+            font-size: 45px;
+            margin-top: 15px;
+            margin-bottom: 25px;
+            filter: drop-shadow(5px 5px 5px #cbdacb);
+            animation: airplaneFly 4s ease-in-out infinite alternate;
+            user-select: none;
+        }
+
+        /* 🎛️ ПАНЕЛЬ УПРАВЛЕНИЯ НЕДЕЛЯМИ */
+        .neumorphic-controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            background: #edf4f2;
+            padding: 10px 20px;
+            border-radius: 20px;
+            box-shadow: 6px 6px 12px #cbdacb, -6px -6px 12px #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        /* 📅 НЕОМОРФНАЯ ПАНЕЛЬ ВЫБОРА ДНЕЙ НЕДЕЛИ (ДО СУББОТЫ) */
+        .days-tabs-panel {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            background: #edf4f2;
+            padding: 8px 15px;
+            border-radius: 20px;
+            box-shadow: inset 4px 4px 8px #cbdacb, inset -4px -4px 8px #ffffff;
+            width: 90%;
+            max-width: 650px;
+        }
+
+        .neu-btn {
+            background: #edf4f2;
+            border: none;
+            outline: none;
+            padding: 10px 18px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #166534;
+            border-radius: 14px;
+            cursor: pointer;
+            box-shadow: 4px 4px 8px #cbdacb, -4px -4px 8px #ffffff;
+            transition: all 0.2s ease;
+        }
+
+        .neu-btn:hover {
+            color: #22c55e;
+            transform: translateY(-1px);
+        }
+
+        /* Активная кнопка дня (вдавленная) */
+        .neu-btn.active-day {
+            box-shadow: inset 3px 3px 6px #cbdacb, inset -3px -3px 6px #ffffff;
+            color: #22c55e;
+            border: 1px solid rgba(34, 197, 94, 0.2);
+        }
+
+        .neu-btn:active {
+            box-shadow: inset 3px 3px 6px #cbdacb, inset -3px -3px 6px #ffffff;
+            transform: translateY(1px);
+        }
+
+        /* ДИАПАЗОН НЕДЕЛИ С ГОДОМ */
+        .current-week-bar {
+            font-size: clamp(14px, 2vw, 18px);
+            font-weight: 700;
+            color: #15803d;
+            margin-bottom: 25px;
+            background: #edf4f2;
+            padding: 8px 20px;
+            border-radius: 20px;
+            box-shadow: inset 4px 4px 8px #cbdacb, inset -4px -4px 8px #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        /* КОНТЕЙНЕР ДЛЯ ВЫВОДА ОДНОГО ДНЯ */
+        .single-display-container {
+            width: 100%;
+            max-width: 500px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        /* 📋 КАРТОЧКА ДНЯ */
+        .day-card {
+            display: none; /* Включает JS по одному */
+            background: #edf4f2;
+            border-radius: 24px;
+            padding: 20px;
+            border: 1.5px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 10px 10px 20px #cbdacb, -10px -10px 20px #ffffff;
+            animation: cardAppear 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.2) forwards;
+        }
+
+        /* 🔥 ПОДДСВЕТКА СЕГОДНЯШНЕГО ДНЯ */
+        .day-card.today {
+            background: #f0fdf4;
+            border: 2px solid #22c55e;
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.2), 10px 10px 20px #cbdacb, -10px -10px 20px #ffffff;
+        }
+        .day-card.today .day-title { color: #22c55e; }
+
+        /* ВЫХОДНОЙ ПЛАНЕР */
+        .weekend-card {
+            display: none;
+            text-align: center;
+            background: #edf4f2;
+            border-radius: 24px;
+            padding: 30px 20px;
+            border: 1.5px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 10px 10px 20px #cbdacb, -10px -10px 20px #ffffff;
+            color: #166534;
+            font-weight: 700;
+            font-size: 18px;
+            animation: cardAppear 0.4s ease forwards;
+        }
+
+        .day-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 19px;
+            font-weight: 800;
+            color: #166534;
+            margin-top: 0;
+            margin-bottom: 15px;
+            border-bottom: 2px solid rgba(34, 197, 94, 0.2);
+            padding-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .day-date {
+            font-size: 13px;
+            font-weight: 700;
+            color: #15803d;
+            background: #edf4f2;
+            padding: 3px 10px;
+            border-radius: 10px;
+            box-shadow: inset 2px 2px 5px #cbdacb, inset -2px -2px 5px #ffffff;
+            text-transform: none;
+        }
+
+        /* СПИСОК УРОКОВ */
+        .lesson-list { list-style: none; padding: 0; margin: 0; }
+        
+        .lesson-item {
+            display: flex;
+            flex-direction: column; /* Изменили, чтобы ДЗ помещалось снизу названия */
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 14px;
+            background: #edf4f2;
+            box-shadow: inset 3px 3px 6px #cbdacb, inset -3px -3px 6px #ffffff;
+            transition: all 0.2s ease;
+        }
+        .lesson-item:hover {
+            background: #ffffff;
+            box-shadow: 2px 2px 6px rgba(34, 197, 94, 0.1), -2px -2px 6px #ffffff;
+            transform: scale(1.01);
+        }
+        .lesson-item:last-child { margin-bottom: 0; }
+        
+        /* Верхняя часть строки урока */
+        .lesson-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .lesson-time {
+            font-weight: 700;
+            color: #64748b;
+            font-size: 12px;
+            background: #edf4f2;
+            padding: 2px 7px;
+            border-radius: 8px;
+            box-shadow: 1px 1px 3px #cbdacb, -1px -1px 3px #ffffff;
+        }
+        .lesson-name { font-weight: 600; color: #1e293b; }
+
+        /* 📋 СТИЛЬ ДЛЯ ПЛАШКИ ДОМАШНЕГО ЗАДАНИЯ (ДЗ) */
+        .lesson-homework {
+            margin-top: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #b45309; /* Приятный янтарно-оранжевый цвет для ДЗ */
+            background: rgba(245, 158, 11, 0.05);
+            padding: 4px 8px;
+            border-radius: 8px;
+            border-left: 3px solid #f59e0b;
+            text-align: left;
+            align-self: flex-start;
+        }
+
+        /* АНИМАЦИИ */
+        @keyframes flagWaveAnimation {
+            0% { border-radius: 30px 45px 35px 50px; transform: rotateX(2deg) rotateY(-2deg) skewX(-1deg) translateY(0px); }
+            50% { border-radius: 40px 35px 45px 35px; transform: rotateX(0deg) rotateY(0deg) skewX(0deg) translateY(-3px); }
+            100% { border-radius: 35px 50px 30px 45px; transform: rotateX(-2deg) rotateY(2deg) skewX(1deg) translateY(3px); }
+        }
+        @keyframes airplaneFly {
+            0% { transform: translateY(0) translateX(-5px) rotate(0deg); }
+            100% { transform: translateY(-8px) translateX(5px) rotate(3deg); }
+        }
+        @keyframes cardAppear {
+            0% { opacity: 0; transform: scale(0.95) translateY(10px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wave-wrapper">
+        <div class="liquid-flag-bg"></div>
+        
+        <div class="content-layer">
+            <!-- Летающий самолётик -->
+            <div class="airplane-container">✈️</div>
+            
+            <!-- Панель недель -->
+            <div class="neumorphic-controls">
+                <button class="neu-btn" onclick="changeWeek(-1)">◀ Назад</button>
+                <button class="neu-btn" onclick="resetToCurrentWeek()">Текущая</button>
+                <button class="neu-btn" onclick="changeWeek(1)">Вперёд ▶</button>
+            </div>
+
+            <!-- ТАБЫ ВЫБОРА ДНЕЙ НЕДЕЛИ (ДОБАВЛЕНА СБ) -->
+            <div class="days-tabs-panel">
+                <button class="neu-btn" id="btn-1" onclick="selectDay(1)">Пн</button>
+                <button class="neu-btn" id="btn-2" onclick="selectDay(2)">Вт</button>
+                <button class="neu-btn" id="btn-3" onclick="selectDay(3)">Ср</button>
+                <button class="neu-btn" id="btn-4" onclick="selectDay(4)">Чт</button>
+                <button class="neu-btn" id="btn-5" onclick="selectDay(5)">Пт</button>
+                <button class="neu-btn" id="btn-6" onclick="selectDay(6)">Сб</button>
+            </div>
+
+            <!-- Диапазон недели -->
+            <div class="current-week-bar" id="week-range">Загрузка...</div>
+            
+            <!-- ЗОНА ОТОБРАЖЕНИЯ КАРТОЧКИ ДНЯ -->
+            <div class="single-display-container">
+                
+                <!-- ПН (6 УРОКОВ) -->
+                <div class="day-card" id="day-1">
+                    <h2 class="day-title">Понедельник <span class="day-date" id="date-1"></span></h2>
+                    <ul class="lesson-list">
+                        <li class="lesson-item">
+                            <div class="lesson-top"><span class="lesson-time">08:00</span><span class="lesson-name">Математика</span></div>
+                            <div class="lesson-homework">ДЗ</div>
+                        </li>
+                        <li class="lesson-item">
+                            <div class="lesson-top"><span class="lesson-time">08:55</span><span class="lesson-name">Казахский язык</span></div>
+                            <div class="lesson-homework">ДЗ</div>
+                        </li>
+                        <li class="lesson-item">
+                            <div class="lesson-top"><span class="lesson-time">09:55</span><span class="lesson-name">Русский язык</span></div>
+                            <div class="lesson-homework">ДЗ</div>
+                        </li>
+                        <li class="lesson-item">
+                            <div class="lesson-top"><span class="lesson-time">10:55</span><span class="lesson-name">Естествознание</span></div>
+                            <div class="lesson-homework">ДЗ</div>
+                        </li>
+                        <li class="lesson-item">
+                            <div class="lesson-top"><span class="lesson-time">11:50</span><span class="lesson-name">Литературное чтение</span></div>
+                            <div class="lesson-homework">ДЗ</div>
+                        </li>
+                        <li class="lesson-item">
+                            <div class="lesson-top"><span class="lesson-time">12:45</span><span class="lesson-name">Информатика</span></div>
+                            <div class="lesson-homework">ДЗ</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- ВТ (5 УРОКОВ) -->
+                <div class="day-card" id="day-2">
+                    <h2 class="day-title">Вторник <span class="day-date" id="date-2"></span></h2>
+                    <ul class="lesson-list">
+                        <li class="lesson-item">
+                            <div class="lesson-top"><span class="lesson-time">08:00</span><span class="lesson-name">Математика</span></div>
+                            <div class="lesson-homework">ДЗ</div>
+                        </li>
+                        <li class="lesson-item">
+                            <div class="lesson-top"><span class="lesson-time">08:55</span><span class="lesson-name">Литературное чтение</span></div>
+                            <div class="lesson-homework">ДЗ</div>
+                        </li>
+                        <li class="lesson-item">
+                            <div class="lesson-top"><span class="lesson-time">09:55</span><span class="lesson-name">Цифровая грамотность</span></div>
+                            <div class="lesson-homework">ДЗ</div>
+                        </li>
+                        <li class="lesson-item">
+                            <div class="lesson-top"><span class="lesson-time">10:55</span><span class="lesson-name">Русский язык</span></div>
+                            <div class="lesson-homework">ДЗ</div>
+                        </li>
+                        <li class="lesson-item">
+                            <div class="lesson-top"><span class="lesson-time">11:50</span><span class="lesson-name">Физкультура</span></div>
+                            <div class="lesson-homework">ДЗ</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- СР (6 УРОКОВ) -->
+                <div class="day-card" id="day-3">
+                    <h2 class="day-title">Среда <span class="day-date" id="date-3"></span></h2>
+                    <ul class="lesson-list">
+                        <li class="lesson-item">
+                            <div class="lesson-top"><span class="lesson-time">08:00</span><span class="lesson-name">Математика</span></div>
+                            <div class="lesson-homework">ДЗ</div>
+                        </li>
+                        <li class="lesson-item">
+                            <div class="lesson-top"><span class="lesson-time">08:55</span><span class="lesson-name">Казахский язык</span></div>
+                            <div class="lesson-homework">ДЗ</div>
+                        </li>
+                        <li class="lesson-item">
+                            <div class="lesson-top"><span class="lesson-time">09:55</span><span class="lesson-name">Русский язык</span></div>
+                            <div class="lesson-homework">ДЗ</div>
+                        </li>
+                        <li class="lesson-item">
+                            <div class="lesson-top"><span class="lesson-time">10:55</span><span class="lesson-name">Английский язык</span></div>
+                            <div class="lesson-homework">ДЗ</div>
+                        </li>
+                        <li class="lesson-item">
+                            <div class="lesson-top"><span class="lesson-time">11:50</span><span class="lesson-name">Естествознание</span></div>
+                            <div class="lesson-homework">ДЗ</div>
+                        </li>
+                        <li class="lesson-item">
+                            <div class="lesson-top"><span class="lesson-time">12:45</span><span class="lesson-name">Самопознание</span></div>
+                            <div class="lesson-homework">ДЗ</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- ЧТ (5 УРОКОВ) -->
+                <div class="day-card" id="day-4">
+                    <h2 class="day-title">Четверг <span class="day-date" id="date-4"></span></h2>
+                    <ul class="lesson-list">
+                        <li class="lesson-item">
+                            <div class="lesson-top"><span class="lesson-time">08:00</span><span class="lesson-name">Естествознание</span></div>
+                            <div class="lesson-homework">ДЗ</div>
+                        </li>
+                        <li class="lesson-item">
+                            <div class="lesson-top"><span class="lesson-time">08:55</span><span class="lesson-name">Литературное чтение</span></div>
+                            <div class="lesson-homework">ДЗ</div>
+                        </li>
+                        <li class="lesson-item">
+                            <div class="lesson-top"><span class="lesson-time">09:55</span><span class="lesson-name">Художественный труд</span></div>
+                            <div class="lesson-homework">ДЗ</div>
+                        </li>
+                        <li class="lesson-item">
+                            <div class="lesson-top"><span class="lesson-time">10:55</span><span class="lesson-name">Математика</span></div>
+                            <div class="lesson-homework">ДЗ</div>
+                        </li>
+                        <li class="lesson-item">
+                            <div class="lesson-top"><span class="lesson-time">11:50</span><span class="lesson-name">Казахский язык</span></div>
+                            <div class="lesson-homework">ДЗ</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- ПТ (5 УРОКОВ) -->
+                <div class="day-card" id="day-5">
+                    <h2 class="day-title">Пятница <span class="day-date" id="date-5"></span></h2>
+                    <ul class="lesson-list">
+                        <li class="lesson-item">
+                            <div class="lesson-top"><span class="lesson-time">08:00</span><span class="lesson-name">Математика</span></div>
+                            <div class="lesson-homework">ДЗ</div>
+                        </li>
+                        <li class="lesson-item">
+                            <div class="lesson-top"><span class="lesson-time">08:55</span><span class="lesson-name">Казахский язык</span></div>
+                            <div class="lesson-homework">ДЗ</div>
+                        </li>
+                        <li class="lesson-item">
+                            <div class="lesson-top"><span class="lesson-time">09:55</span><span class="lesson-name">Познание мира</span></div>
+                            <div class="lesson-homework">ДЗ</div>
+                        </li>
+                        <li class="lesson-item">
+                            <div class="lesson-top"><span class="lesson-time">10:55</span><span class="lesson-name">Музыка</span></div>
+                            <div class="lesson-homework">ДЗ</div>
+                        </li>
+                        <li class="lesson-item">
+                            <div class="lesson-top"><span class="lesson-time">11:50</span><span class="lesson-name">Русский язык</span></div>
+                            <div class="lesson-homework">ДЗ</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- СУББОТА (ВЫХОДНОЙ) -->
+                <div class="day-card" id="day-6">
+                    <h2 class="day-title">Суббота <span class="day-date" id="date-6"></span></h2>
+                    <div style="text-align: center; font-weight: 700; color: #166534; padding: 15px 0;">
+                        🎉 Суббота — Ура, выходной! Никаких уроков, отдыхай на полную! 🏄‍♂️
+                    </div>
+                </div>
+
+                <!-- Универсальная карточка воскресенья -->
+                <div class="weekend-card" id="weekend-card">
+                    🎉 Сегодня воскресенье! Отличного отдыха! Выбери любой учебный день на кнопках выше, чтобы посмотреть расписание.
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let weekOffset = 0; 
+        let selectedDayId = null; 
+
+        function updateWeekSchedule() {
+            const todayReal = new Date();
+            const targetDate = new Date(); 
+            
+            targetDate.setDate(targetDate.getDate() + (weekOffset * 7));
+            const currentDay = targetDate.getDay(); 
+            
+            const distanceToMonday = currentDay === 0 ? -6 : 1 - currentDay;
+            const monday = new Date(targetDate);
+            monday.setDate(targetDate.getDate() + distanceToMonday);
+
+            const optionsDay = { day: 'numeric', month: 'short' };
+            const optionsWeek = { day: 'numeric', month: 'long', year: 'numeric' };
+            
+            let mondayStr = "";
+            let saturdayStr = "";
+
+            // Заполняем даты для ПН - СБ (1 - 6)
+            for (let i = 1; i <= 6; i++) {
+                const dayDate = new Date(monday);
+                dayDate.setDate(monday.getDate() + (i - 1));
+                
+                const formattedDate = dayDate.toLocaleDateString('ru-RU', optionsDay);
+                document.getElementById(`date-${i}`).innerText = formattedDate;
+
+                if (i === 1) mondayStr = dayDate.toLocaleDateString('ru-RU', optionsWeek);
+                if (i === 6) saturdayStr = dayDate.toLocaleDateString('ru-RU', optionsWeek);
+
+                // Отслеживаем подсветку "сегодня"
+                const dayCard = document.getElementById(`day-${i}`);
+                dayCard.classList.remove('today');
+
+                if (todayReal.getDate() === dayDate.getDate() && 
+                    todayReal.getMonth() === dayDate.getMonth() && 
+                    todayReal.getFullYear() === dayDate.getFullYear()) {
+                    dayCard.classList.add('today');
+                }
+            }
+
+            document.getElementById('week-range').innerText = `Неделя: ${mondayStr} — ${saturdayStr}`;
+            
+            // Если день не выбран вручную — авто-определение текущего дня календаря
+            if (selectedDayId === null) {
+                const realDayNumber = todayReal.getDay(); // 0 - ВС, 1 - ПН... 6 - СБ
+                if (realDayNumber >= 1 && realDayNumber <= 6 && weekOffset === 0) {
+                    selectDay(realDayNumber);
+                } else {
+                    showSundayWeekend();
+                }
+            } else {
+                selectDay(selectedDayId);
+            }
+        }
+
+        function selectDay(dayId) {
+            selectedDayId = dayId;
+            document.getElementById('weekend-card').style.display = 'none';
+
+            for (let i = 1; i <= 6; i++) {
+                const card = document.getElementById(`day-${i}`);
+                const btn = document.getElementById(`btn-${i}`);
+                
+                if (i === dayId) {
+                    card.style.display = 'block'; 
+                    btn.classList.add('active-day'); 
+                } else {
+                    card.style.display = 'none';
+                    btn.classList.remove('active-day');
+                }
+            }
+        }
+
+        function showSundayWeekend() {
+            for (let i = 1; i <= 6; i++) {
+                document.getElementById(`day-${i}`).style.display = 'none';
+                document.getElementById(`btn-${i}`).classList.remove('active-day');
+            }
+            document.getElementById('weekend-card').style.display = 'block';
+        }
+
+        function changeWeek(direction) {
+            weekOffset += direction;
+            updateWeekSchedule();
+        }
+
+        function resetToCurrentWeek() {
+            weekOffset = 0;
+            selectedDayId = null; 
+            updateWeekSchedule();
+        }
+
+        updateWeekSchedule();
+    </script>
+</body>
+</html>
