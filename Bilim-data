@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BilimClass - Ультра 3D Неоморфное Расписание</title>
+    <title>BilimClass - Умное Расписание с Датами</title>
     <style>
-        /* БАЗОВОЕ ХАЙ-ТЕК ПРОСТРАНСТВО */
         html, body {
             margin: 0;
             padding: 0;
@@ -14,52 +13,45 @@
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            background: #eef2f3 !important; /* Мягкая светлая подложка для идеального неоморфизма */
+            background: #edf4f2 !important; /* Мягкая неоморфная основа */
             overflow-x: hidden;
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             box-sizing: border-box;
         }
 
-        /* 🌊 ГЛОБАЛЬНЫЙ 3D КОНТЕЙНЕР С ЭФФЕКТОМ ГЛУБИНЫ */
+        /* 🌊 АДАПТИВНЫЙ КОНТЕЙНЕР-ФЛАГ */
         .wave-wrapper {
             position: relative;
-            width: 96vw;
-            margin: 30px auto;
-            padding: 30px;
+            width: 95vw;
+            margin: 20px auto;
+            padding: 20px;
             box-sizing: border-box;
-            perspective: 1500px; /* Усиленная 3D перспектива для крутого наклона */
+            perspective: 1000px;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        /* 🔥 КИБЕРНЕТИЧЕСКАЯ ЖИДКАЯ КАПЛЯ НА ЗАДНЕМ ФОНЕ */
+        /* 🟢 ЖИДКИЙ ЗАДНИЙ ФОН */
         .liquid-flag-bg {
             position: absolute;
-            top: -5%;
-            left: -5%;
-            width: 110%;
-            height: 110%;
-            background: linear-gradient(135deg, rgba(74, 222, 128, 0.35), rgba(34, 197, 94, 0.15), rgba(6, 182, 212, 0.2));
-            backdrop-filter: blur(40px);
-            -webkit-backdrop-filter: blur(40px);
-            
-            /* Жидкая постоянно меняющаяся форма */
-            border-radius: 40% 60% 35% 65% / 60% 40% 60% 40%;
-            border: 3px solid rgba(255, 255, 255, 0.7);
-            
-            /* Мощнейшее футуристическое свечение */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(74, 222, 128, 0.4), rgba(34, 197, 94, 0.2));
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border-radius: 30px;
+            border: 2.5px solid rgba(255, 255, 255, 0.6);
             box-shadow: 
-                inset 0 0 50px rgba(255, 255, 255, 0.6),
-                0 25px 60px rgba(34, 197, 94, 0.15),
-                0 -25px 60px rgba(6, 182, 212, 0.1);
-            
-            /* Медленная лавовая анимация капли */
-            animation: lavaFlow 16s ease-in-out infinite alternate;
+                inset 0 0 30px rgba(255, 255, 255, 0.5),
+                0 15px 35px rgba(34, 197, 94, 0.08);
+            animation: flagWaveAnimation 12s ease-in-out infinite alternate;
             z-index: 1;
         }
 
-        /* 👑 СЛОЙ КОНТЕНТА, ПЛЫВУЩИЙ В 3D ПРОСТРАНСТВЕ */
+        /* 👑 СЛОЙ КОНТЕНТА */
         .content-layer {
             position: relative;
             z-index: 2;
@@ -67,120 +59,149 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            transform-style: preserve-3d;
-            animation: flag3DWave 10s ease-in-out infinite alternate;
+            animation: flagWaveAnimation 12s ease-in-out infinite alternate;
         }
 
-        /* ✨ ОГРОМНЫЙ ЗАКРУГЛЕННЫЙ ТЕКСТ С ДВОЙНЫМ СИЯНИЕМ */
+        /* ✈️ НЕОМОРФНЫЙ ЛЕТАЮЩИЙ САМОЛЁТИК */
+        .airplane-container {
+            font-size: 40px;
+            margin-bottom: -10px;
+            filter: drop-shadow(5px 5px 5px #cbdacb);
+            animation: airplaneFly 4s ease-in-out infinite alternate;
+            user-select: none;
+        }
+
+        /* ✨ ЗАКРУГЛЕННЫЙ ЗАГОЛОВОК С ЗОЛОТЫМ СИЯНИЕМ */
         .shining-text {
-            font-size: clamp(32px, 6vw, 58px); 
+            font-size: clamp(26px, 4.5vw, 48px); 
             font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: clamp(3px, 1.2vw, 8px);
+            letter-spacing: clamp(2px, 0.8vw, 6px);
             margin: 10px 0 5px 0;
             text-align: center;
             user-select: none;
-            
-            /* Жидкое переливающееся золото */
             background: linear-gradient(to right, #b45309 0%, #f59e0b 25%, #fef08a 50%, #f59e0b 75%, #b45309 100%);
             background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            
-            filter: drop-shadow(0 5px 10px rgba(180, 83, 9, 0.15));
-            animation: goldShine 2.5s linear infinite;
-            transform: translateZ(50px); /* Выталкивает текст вперед на 50px над интерфейсом! */
+            filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.05));
+            animation: goldShine 3s linear infinite;
         }
 
-        /* ПЛАШКА ТЕКУЩЕЙ НЕДЕЛИ С НЕОМОРФНЫМ ВДАВЛИВАНИЕМ */
+        /* 🎛️ ПАНЕЛЬ УПРАВЛЕНИЯ НЕДЕЛЯМИ */
+        .neumorphic-controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            background: #edf4f2;
+            padding: 10px 20px;
+            border-radius: 20px;
+            box-shadow: 6px 6px 12px #cbdacb, -6px -6px 12px #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        /* 📅 НЕОМОРФНАЯ ПАНЕЛЬ ВЫБОРА ДНЕЙ НЕДЕЛИ */
+        .days-tabs-panel {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            background: #edf4f2;
+            padding: 8px 15px;
+            border-radius: 20px;
+            box-shadow: inset 4px 4px 8px #cbdacb, inset -4px -4px 8px #ffffff;
+            width: 90%;
+            max-width: 600px;
+        }
+
+        .neu-btn {
+            background: #edf4f2;
+            border: none;
+            outline: none;
+            padding: 10px 18px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #166534;
+            border-radius: 14px;
+            cursor: pointer;
+            box-shadow: 4px 4px 8px #cbdacb, -4px -4px 8px #ffffff;
+            transition: all 0.2s ease;
+        }
+
+        .neu-btn:hover {
+            color: #22c55e;
+            transform: translateY(-1px);
+        }
+
+        /* Активная кнопка дня (вдавленная) */
+        .neu-btn.active-day {
+            box-shadow: inset 3px 3px 6px #cbdacb, inset -3px -3px 6px #ffffff;
+            color: #22c55e;
+            border: 1px solid rgba(34, 197, 94, 0.2);
+        }
+
+        .neu-btn:active {
+            box-shadow: inset 3px 3px 6px #cbdacb, inset -3px -3px 6px #ffffff;
+            transform: translateY(1px);
+        }
+
+        /* ДИАПАЗОН НЕДЕЛИ С ГОДОМ */
         .current-week-bar {
-            font-size: clamp(14px, 2.2vw, 19px);
+            font-size: clamp(14px, 2vw, 18px);
             font-weight: 700;
             color: #15803d;
-            margin-bottom: 35px;
-            
-            /* Эффект вогнутого неоморфизма (Inverted Neomorphism) */
-            background: #eef2f3;
-            padding: 8px 22px;
-            border-radius: 25px;
-            box-shadow: 
-                inset 3px 3px 6px rgba(0, 0, 0, 0.05), 
-                inset -3px -3px 6px rgba(255, 255, 255, 0.9);
-            transform: translateZ(30px);
+            margin-bottom: 25px;
+            background: #edf4f2;
+            padding: 8px 20px;
+            border-radius: 20px;
+            box-shadow: inset 4px 4px 8px #cbdacb, inset -4px -4px 8px #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.4);
         }
 
-        /* 📅 УМНАЯ АДАПТИВНАЯ СЕТКА КАРТОЧЕК */
-        .schedule-grid {
-            display: grid;
+        /* КОНТЕЙНЕР ДЛЯ ВЫВОДА ОДНОГО ДНЯ */
+        .single-display-container {
             width: 100%;
-            gap: 25px;
-            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+            max-width: 500px;
+            padding: 10px;
             box-sizing: border-box;
-            padding: 15px;
-            transform-style: preserve-3d;
         }
 
-        /* 📋 КАРТОЧКА: ПЕРЕСЕЧЕНИЕ НЕОМОРФИЗМА И МАТОВОГО СТЕКЛА */
+        /* 📋 КАРТОЧКА ДНЯ */
         .day-card {
-            background: rgba(238, 242, 243, 0.6);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border-radius: 24px; /* Максимально закругленные грани */
-            padding: 22px;
-            box-sizing: border-box;
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            
-            /* Выпуклый объемный Неоморфизм */
-            box-shadow: 
-                9px 9px 20px rgba(166, 180, 184, 0.7), 
-                -9px -9px 20px rgba(255, 255, 255, 0.9),
-                inset 1px 1px 0px rgba(255, 255, 255, 0.5);
-            
-            /* Настройка плавности для эффекта скретчинга */
-            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
-                        box-shadow 0.4s ease, 
-                        background-color 0.4s ease;
-            transform-style: preserve-3d;
-            transform: translateZ(10px);
+            display: none; /* Изначально скрыты все, включает JS */
+            background: #edf4f2;
+            border-radius: 24px;
+            padding: 20px;
+            border: 1.5px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 10px 10px 20px #cbdacb, -10px -10px 20px #ffffff;
+            animation: cardAppear 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.2) forwards;
         }
 
-        /* 🌪️ ЭФФЕКТ СКРЕТЧИНГА И 3D НАКЛОНА ПРИ НАВЕДЕНИИ (РЕЗИНОВАЯ ПРУЖИНА) */
-        .day-card:hover {
-            background: rgba(255, 255, 255, 0.85);
-            
-            /* Карточка вытягивается, пружинит и скручивается в 3D */
-            transform: scale(1.05) rotateX(8deg) rotateY(-8deg) translateZ(40px);
-            
-            /* Тень становится глубже, усиливая эффект отрыва от экрана */
-            box-shadow: 
-                15px 20px 35px rgba(166, 180, 184, 0.6), 
-                -15px -15px 35px rgba(255, 255, 255, 1);
-        }
-
-        /* 🔥 КАРТОЧКА СЕГОДНЯШНЕГО ДНЯ С НЕОНОВЫМ ДРАЙВОМ */
+        /* 🔥 ПОДДСВЕТКА ЕСЛИ СМОТРИМ ИМЕННО СЕГОДНЯШНИЙ ДЕНЬ */
         .day-card.today {
-            background: rgba(255, 255, 255, 0.85);
+            background: #f0fdf4;
             border: 2px solid #22c55e;
-            /* Неоморфный объем + Изумрудное неоновое свечение */
-            box-shadow: 
-                0 0 25px rgba(34, 197, 94, 0.4),
-                9px 9px 22px rgba(166, 180, 184, 0.5), 
-                -9px -9px 22px rgba(255, 255, 255, 0.9);
-            transform: translateZ(25px);
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.2), 10px 10px 20px #cbdacb, -10px -10px 20px #ffffff;
         }
-        .day-card.today:hover {
-            transform: scale(1.06) rotateX(8deg) rotateY(-8deg) translateZ(55px);
-            box-shadow: 
-                0 0 35px rgba(34, 197, 94, 0.6),
-                15px 20px 35px rgba(166, 180, 184, 0.5);
-        }
-        .day-card.today .day-title {
-            color: #22c55e;
-            text-shadow: 0 0 8px rgba(34, 197, 94, 0.3);
+        .day-card.today .day-title { color: #22c55e; }
+
+        /* ВЫХОДНОЙ ПЛАНЕР */
+        .weekend-card {
+            display: none;
+            text-align: center;
+            background: #edf4f2;
+            border-radius: 24px;
+            padding: 30px 20px;
+            border: 1.5px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 10px 10px 20px #cbdacb, -10px -10px 20px #ffffff;
+            color: #166534;
+            font-weight: 700;
+            font-size: 18px;
+            animation: cardAppear 0.4s ease forwards;
         }
 
-        /* КРУТЫЕ СТИЛИ ВНУТРИ КАРТОЧКИ */
         .day-title {
             display: flex;
             justify-content: space-between;
@@ -190,24 +211,25 @@
             color: #166534;
             margin-top: 0;
             margin-bottom: 15px;
-            border-bottom: 2px dashed rgba(34, 197, 94, 0.25);
-            padding-bottom: 7px;
+            border-bottom: 2px solid rgba(34, 197, 94, 0.2);
+            padding-bottom: 5px;
             text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
         .day-date {
             font-size: 13px;
             font-weight: 700;
-            background: rgba(34, 197, 94, 0.12);
-            padding: 3px 9px;
-            border-radius: 12px;
             color: #15803d;
+            background: #edf4f2;
+            padding: 3px 10px;
+            border-radius: 10px;
+            box-shadow: inset 2px 2px 5px #cbdacb, inset -2px -2px 5px #ffffff;
+            text-transform: none;
         }
 
+        /* СПИСОК УРОКОВ */
         .lesson-list { list-style: none; padding: 0; margin: 0; }
         
-        /* СТРОКА УРОКА С ВНУТРЕННИМ НЕОМОРФНЫМ ОБЪЕМОМ */
         .lesson-item {
             display: flex;
             justify-content: space-between;
@@ -215,155 +237,254 @@
             padding: 10px 12px;
             margin-bottom: 8px;
             border-radius: 14px;
-            background: rgba(255, 255, 255, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.4);
+            background: #edf4f2;
+            box-shadow: inset 3px 3px 6px #cbdacb, inset -3px -3px 6px #ffffff;
+            font-size: 15px;
             transition: all 0.2s ease;
         }
         .lesson-item:hover {
             background: #ffffff;
-            transform: translateZ(15px); /* Текст урока выплывает вперед при ховере */
+            box-shadow: 2px 2px 6px rgba(34, 197, 94, 0.1), -2px -2px 6px #ffffff;
+            transform: scale(1.01);
         }
         .lesson-item:last-child { margin-bottom: 0; }
         
         .lesson-time {
             font-weight: 700;
-            color: #475569;
+            color: #64748b;
             font-size: 12px;
-            background: #eef2f3;
-            padding: 3px 8px;
+            background: #edf4f2;
+            padding: 2px 7px;
             border-radius: 8px;
-            box-shadow: inset 1px 1px 3px rgba(0,0,0,0.05), 1px 1px 2px rgba(255,255,255,0.8);
+            box-shadow: 1px 1px 3px #cbdacb, -1px -1px 3px #ffffff;
         }
-        .lesson-name { font-weight: 600; color: #1e293b; text-align: right; font-size: 14px; }
+        .lesson-name { font-weight: 600; color: #1e293b; text-align: right; }
 
-        /* 🏴‍☠️ КОРРЕКТНЫЕ И ПЛАВНЫЕ 3D АНИМАЦИИ */
-        @keyframes lavaFlow {
-            0% { border-radius: 40% 60% 35% 65% / 60% 40% 60% 40%; transform: rotate(0deg) scale(1); }
-            50% { border-radius: 55% 45% 55% 45% / 45% 55% 40% 60%; transform: rotate(2deg) scale(1.02); }
-            100% { border-radius: 38% 62% 43% 57% / 50% 42% 58% 50%; transform: rotate(-2deg) scale(0.98); }
+        /* АНИМАЦИИ */
+        @keyframes flagWaveAnimation {
+            0% { border-radius: 30px 45px 35px 50px; transform: rotateX(2deg) rotateY(-2deg) skewX(-1deg) translateY(0px); }
+            50% { border-radius: 40px 35px 45px 35px; transform: rotateX(0deg) rotateY(0deg) skewX(0deg) translateY(-3px); }
+            100% { border-radius: 35px 50px 30px 45px; transform: rotateX(-2deg) rotateY(2deg) skewX(1deg) translateY(3px); }
         }
-
-        @keyframes flag3DWave {
-            0% { transform: rotateX(4deg) rotateY(-4deg) rotateZ(-0.5deg) translateY(0px); }
-            50% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0.5deg) translateY(-5px); }
-            100% { transform: rotateX(-4deg) rotateY(4deg) rotateZ(-0.5deg) translateY(5px); }
+        @keyframes goldShine { 0% { background-position: 200% center; } 100% { background-position: 0% center; } }
+        @keyframes airplaneFly {
+            0% { transform: translateY(0) translateX(-5px) rotate(0deg); }
+            100% { transform: translateY(-8px) translateX(5px) rotate(3deg); }
         }
-
-        @keyframes goldShine {
-            0% { background-position: 200% center; }
-            100% { background-position: 0% center; }
+        @keyframes cardAppear {
+            0% { opacity: 0; transform: scale(0.95) translateY(10px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
         }
     </style>
 </head>
 <body>
 
     <div class="wave-wrapper">
-        <!-- Анимированная жидкая неоновая лава -->
         <div class="liquid-flag-bg"></div>
         
-        <!-- Основной контент-слой с поддержкой 3D -->
         <div class="content-layer">
+            <!-- Летающий самолётик -->
+            <div class="airplane-container">✈️</div>
             
             <h1 class="shining-text">Bilim Class</h1>
-            <div class="current-week-bar" id="week-range">Синхронизация времени...</div>
             
-            <div class="schedule-grid">
+            <!-- Панель недель -->
+            <div class="neumorphic-controls">
+                <button class="neu-btn" onclick="changeWeek(-1)">◀ Назад</button>
+                <button class="neu-btn" onclick="resetToCurrentWeek()">Текущая</button>
+                <button class="neu-btn" onclick="changeWeek(1)">Вперёд ▶</button>
+            </div>
+
+            <!-- ТАБЫ ВЫБОРА ДНЕЙ НЕДЕЛИ -->
+            <div class="days-tabs-panel">
+                <button class="neu-btn" id="btn-1" onclick="selectDay(1)">Пн</button>
+                <button class="neu-btn" id="btn-2" onclick="selectDay(2)">Вт</button>
+                <button class="neu-btn" id="btn-3" onclick="selectDay(3)">Ср</button>
+                <button class="neu-btn" id="btn-4" onclick="selectDay(4)">Чт</button>
+                <button class="neu-btn" id="btn-5" onclick="selectDay(5)">Пт</button>
+            </div>
+
+            <!-- Диапазон недели -->
+            <div class="current-week-bar" id="week-range">Загрузка...</div>
+            
+            <!-- ЗОНА ОТОБРАЖЕНИЯ КАРТОЧКИ ДНЯ -->
+            <div class="single-display-container">
                 
-                <!-- ПН -->
+                <!-- ПН (6 УРОКОВ) -->
                 <div class="day-card" id="day-1">
-                    <h2 class="day-title">Пн <span class="day-date" id="date-1"></span></h2>
+                    <h2 class="day-title">Понедельник <span class="day-date" id="date-1"></span></h2>
                     <ul class="lesson-list">
                         <li class="lesson-item"><span class="lesson-time">08:00</span><span class="lesson-name">Математика</span></li>
                         <li class="lesson-item"><span class="lesson-time">08:55</span><span class="lesson-name">Казахский язык</span></li>
                         <li class="lesson-item"><span class="lesson-time">09:55</span><span class="lesson-name">Русский язык</span></li>
                         <li class="lesson-item"><span class="lesson-time">10:55</span><span class="lesson-name">Естествознание</span></li>
+                        <li class="lesson-item"><span class="lesson-time">11:50</span><span class="lesson-name">Литературное чтение</span></li>
+                        <li class="lesson-item"><span class="lesson-time">12:45</span><span class="lesson-name">Информатика</span></li>
                     </ul>
                 </div>
 
-                <!-- ВТ -->
+                <!-- ВТ (5 УРОКОВ) -->
                 <div class="day-card" id="day-2">
-                    <h2 class="day-title">Вт <span class="day-date" id="date-2"></span></h2>
+                    <h2 class="day-title">Вторник <span class="day-date" id="date-2"></span></h2>
                     <ul class="lesson-list">
                         <li class="lesson-item"><span class="lesson-time">08:00</span><span class="lesson-name">Математика</span></li>
                         <li class="lesson-item"><span class="lesson-time">08:55</span><span class="lesson-name">Литературное чтение</span></li>
                         <li class="lesson-item"><span class="lesson-time">09:55</span><span class="lesson-name">Цифровая грамотность</span></li>
+                        <li class="lesson-item"><span class="lesson-time">10:55</span><span class="lesson-name">Русский язык</span></li>
+                        <li class="lesson-item"><span class="lesson-time">11:50</span><span class="lesson-name">Физкультура</span></li>
                     </ul>
                 </div>
 
-                <!-- СР -->
+                <!-- СР (6 УРОКОВ) -->
                 <div class="day-card" id="day-3">
-                    <h2 class="day-title">Ср <span class="day-date" id="date-3"></span></h2>
+                    <h2 class="day-title">Среда <span class="day-date" id="date-3"></span></h2>
                     <ul class="lesson-list">
                         <li class="lesson-item"><span class="lesson-time">08:00</span><span class="lesson-name">Математика</span></li>
                         <li class="lesson-item"><span class="lesson-time">08:55</span><span class="lesson-name">Казахский язык</span></li>
                         <li class="lesson-item"><span class="lesson-time">09:55</span><span class="lesson-name">Русский язык</span></li>
+                        <li class="lesson-item"><span class="lesson-time">10:55</span><span class="lesson-name">Английский язык</span></li>
+                        <li class="lesson-item"><span class="lesson-time">11:50</span><span class="lesson-name">Естествознание</span></li>
+                        <li class="lesson-item"><span class="lesson-time">12:45</span><span class="lesson-name">Самопознание</span></li>
                     </ul>
                 </div>
 
-                <!-- ЧТ -->
+                <!-- ЧТ (5 УРОКОВ) -->
                 <div class="day-card" id="day-4">
-                    <h2 class="day-title">Чт <span class="day-date" id="date-4"></span></h2>
+                    <h2 class="day-title">Четверг <span class="day-date" id="date-4"></span></h2>
                     <ul class="lesson-list">
                         <li class="lesson-item"><span class="lesson-time">08:00</span><span class="lesson-name">Естествознание</span></li>
                         <li class="lesson-item"><span class="lesson-time">08:55</span><span class="lesson-name">Литературное чтение</span></li>
                         <li class="lesson-item"><span class="lesson-time">09:55</span><span class="lesson-name">Художественный труд</span></li>
+                        <li class="lesson-item"><span class="lesson-time">10:55</span><span class="lesson-name">Математика</span></li>
+                        <li class="lesson-item"><span class="lesson-time">11:50</span><span class="lesson-name">Казахский язык</span></li>
                     </ul>
                 </div>
 
-                <!-- ПТ -->
+                <!-- ПТ (5 УРОКОВ) -->
                 <div class="day-card" id="day-5">
-                    <h2 class="day-title">Пт <span class="day-date" id="date-5"></span></h2>
+                    <h2 class="day-title">Пятница <span class="day-date" id="date-5"></span></h2>
                     <ul class="lesson-list">
                         <li class="lesson-item"><span class="lesson-time">08:00</span><span class="lesson-name">Математика</span></li>
                         <li class="lesson-item"><span class="lesson-time">08:55</span><span class="lesson-name">Казахский язык</span></li>
                         <li class="lesson-item"><span class="lesson-time">09:55</span><span class="lesson-name">Познание мира</span></li>
+                        <li class="lesson-item"><span class="lesson-time">10:55</span><span class="lesson-name">Музыка</span></li>
+                        <li class="lesson-item"><span class="lesson-time">11:50</span><span class="lesson-name">Русский язык</span></li>
                     </ul>
                 </div>
 
-                <!-- СБ -->
-                <div class="day-card" id="day-6">
-                    <h2 class="day-title">Сб <span class="day-date" id="date-6"></span></h2>
-                    <ul class="lesson-list">
-                        <li class="lesson-item"><span class="lesson-time">09:00</span><span class="lesson-name">Самоподготовка</span></li>
-                    </ul>
+                <!-- Карточка выходного дня -->
+                <div class="weekend-card" id="weekend-card">
+                    🎉 Сегодня выходной день! Уроков нет, отдыхай! Нажми на кнопки дней выше, чтобы посмотреть расписание.
                 </div>
 
             </div>
         </div>
     </div>
 
-    <!-- 🧠 АВТОМАТИЧЕСКИЙ СЛЕДЯЩИЙ КАЛЕНДАРЬ -->
     <script>
+        let weekOffset = 0; 
+        let selectedDayId = null; // Выбранный пользователем день
+
         function updateWeekSchedule() {
-            const now = new Date();
-            const currentDay = now.getDay();
+            const todayReal = new Date();
+            const targetDate = new Date(); 
+            
+            targetDate.setDate(targetDate.getDate() + (weekOffset * 7));
+            const currentDay = targetDate.getDay(); 
             
             const distanceToMonday = currentDay === 0 ? -6 : 1 - currentDay;
-            const monday = new Date(now);
-            monday.setDate(now.getDate() + distanceToMonday);
+            const monday = new Date(targetDate);
+            monday.setDate(targetDate.getDate() + distanceToMonday);
 
-            const options = { day: 'numeric', month: 'short' };
+            const optionsDay = { day: 'numeric', month: 'short' };
+            const optionsWeek = { day: 'numeric', month: 'long', year: 'numeric' };
+            
             let mondayStr = "";
-            let saturdayStr = "";
+            let fridayStr = "";
 
-            for (let i = 1; i <= 6; i++) {
+            // Заполняем даты для ПН - ПТ
+            for (let i = 1; i <= 5; i++) {
                 const dayDate = new Date(monday);
                 dayDate.setDate(monday.getDate() + (i - 1));
                 
-                const formattedDate = dayDate.toLocaleDateString('ru-RU', options);
+                const formattedDate = dayDate.toLocaleDateString('ru-RU', optionsDay);
                 document.getElementById(`date-${i}`).innerText = formattedDate;
 
-                if (i === 1) mondayStr = dayDate.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' });
-                if (i === 6) saturdayStr = dayDate.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' });
+                if (i === 1) mondayStr = dayDate.toLocaleDateString('ru-RU', optionsWeek);
+                if (i === 5) fridayStr = dayDate.toLocaleDateString('ru-RU', optionsWeek);
 
-                if (now.getDate() === dayDate.getDate() && now.getMonth() === dayDate.getMonth() && now.getFullYear() === dayDate.getFullYear()) {
-                    document.getElementById(`day-${i}`).classList.add('today');
+                // Отслеживаем подсветку "сегодня"
+                const dayCard = document.getElementById(`day-${i}`);
+                dayCard.classList.remove('today');
+
+                if (todayReal.getDate() === dayDate.getDate() && 
+                    todayReal.getMonth() === dayDate.getMonth() && 
+                    todayReal.getFullYear() === dayDate.getFullYear()) {
+                    dayCard.classList.add('today');
                 }
             }
 
-            document.getElementById('week-range').innerText = `Неделя: ${mondayStr} — ${saturdayStr}`;
+            document.getElementById('week-range').innerText = `Неделя: ${mondayStr} — ${fridayStr}`;
+            
+            // Если день ещё не выбирался вручную — авто-определяем текущий рабочий день
+            if (selectedDayId === null) {
+                const realDayNumber = todayReal.getDay(); // 0 - ВС, 1 - ПН... 6 - СБ
+                if (realDayNumber >= 1 && realDayNumber <= 5 && weekOffset === 0) {
+                    selectDay(realDayNumber);
+                } else {
+                    showWeekend();
+                }
+            } else {
+                // Если листаем недели, просто перерисовываем открытый день
+                selectDay(selectedDayId);
+            }
         }
 
+        // Функция переключения отображаемого дня
+        function selectDay(dayId) {
+            selectedDayId = dayId;
+            
+            // Скрываем плашку выходного
+            document.getElementById('weekend-card').style.display = 'none';
+
+            // Перебираем карточки и кнопки
+            for (let i = 1; i <= 5; i++) {
+                const card = document.getElementById(`day-${i}`);
+                const btn = document.getElementById(`btn-${i}`);
+                
+                if (i === dayId) {
+                    card.style.display = 'block'; // Показываем только этот день
+                    btn.classList.add('active-day'); // Вдавливаем кнопку
+                } else {
+                    card.style.display = 'none';
+                    btn.classList.remove('active-day');
+                }
+            }
+        }
+
+        // Функция для вывода выходного состояния
+        function showWeekend() {
+            // Скрываем все карточки дней
+            for (let i = 1; i <= 5; i++) {
+                document.getElementById(`day-${i}`).style.display = 'none';
+                document.getElementById(`btn-${i}`).classList.remove('active-day');
+            }
+            // Показываем сообщение отдыха
+            document.getElementById('weekend-card').style.display = 'block';
+        }
+
+        function changeWeek(direction) {
+            weekOffset += direction;
+            updateWeekSchedule();
+        }
+
+        function resetToCurrentWeek() {
+            weekOffset = 0;
+            selectedDayId = null; // Чтобы сработал автовыбор текущего дня
+            updateWeekSchedule();
+        }
+
+        // Старт системы
         updateWeekSchedule();
     </script>
 </body>
