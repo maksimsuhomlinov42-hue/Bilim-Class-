@@ -3,327 +3,273 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BilimClass - Умное Расписание</title>
+    <title>BilimClass - Адаптивное Расписание</title>
     <style>
-        body {
+        /* БАЗОВЫЕ НАСТРОЙКИ ДЛЯ ВСЕГО ЭКРАНА */
+        html, body {
             margin: 0;
-            padding: 10px;
+            padding: 0;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            background: transparent !important;
+            overflow-x: hidden;
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: transparent !important; 
-            color: #1e293b; 
             box-sizing: border-box;
         }
 
-        /* 🔮 СВЕТЛОЕ МАТОВОЕ СТЕКЛО */
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.4); 
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            border-radius: 20px;
+        /* 🌊 ГЛАВНЫЙ КОНТЕЙНЕР-ФЛАГ (Адаптируется под ПК и Мобильные) */
+        .wave-wrapper {
+            position: relative;
+            width: 95vw;
+            margin: 20px auto;
             padding: 20px;
-            width: 100%;
-            max-width: 600px;
-            margin: 0 auto;
-            box-shadow: 
-                inset 1px 1px 3px rgba(255, 255, 255, 0.8),
-                0 10px 30px rgba(0, 0, 0, 0.04);
-            animation: panelAppear 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        @keyframes panelAppear {
-            0% { opacity: 0; transform: translateY(20px) scale(0.98); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
-        .toolbar {
+            box-sizing: border-box;
+            perspective: 1000px; /* Глубина для 3D эффекта флага */
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            margin-bottom: 20px;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-            padding-bottom: 15px;
-        }
-
-        .toolbar-row {
-            display: flex;
-            gap: 12px;
-            width: 100%;
-        }
-
-        .select-wrapper {
-            flex: 1;
-        }
-
-        label {
-            display: block;
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: #64748b;
-            margin-bottom: 4px;
-            font-weight: 600;
-        }
-
-        select {
-            width: 100%;
-            padding: 10px 14px;
-            background: rgba(255, 255, 255, 0.6);
-            border: 1px solid rgba(0, 0, 0, 0.08);
-            border-radius: 10px;
-            color: #1e293b;
-            font-size: 14px;
-            outline: none;
-            cursor: pointer;
-            appearance: none;
-            transition: all 0.2s ease;
-        }
-
-        select:focus {
-            background: rgba(255, 255, 255, 0.9);
-            border-color: rgba(0, 0, 0, 0.2);
-        }
-
-        .days-tabs {
-            display: flex;
-            gap: 6px;
-            overflow-x: auto;
-            padding: 4px 2px;
-        }
-        .days-tabs::-webkit-scrollbar { height: 0px; }
-
-        /* 💧 ЖИДКОЕ СТЕКЛО ПРИ КЛИКЕ */
-        .tab-btn {
-            flex: 1;
-            background: rgba(255, 255, 255, 0.4);
-            border: 1px solid rgba(0, 0, 0, 0.06);
-            padding: 10px 0;
-            border-radius: 10px;
-            color: #64748b;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 600;
-            text-align: center;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
-                        background 0.3s, border-color 0.3s, box-shadow 0.4s, color 0.3s;
-            transform-origin: center bottom;
-        }
-
-        .tab-btn:hover {
-            color: #1e293b;
-            background: rgba(255, 255, 255, 0.7);
-            border-color: rgba(0, 0, 0, 0.12);
-        }
-
-        .tab-btn:active {
-            transform: scale(1.08, 0.85); 
-            background: rgba(255, 255, 255, 0.2);
-            box-shadow: 
-                inset 2px 2px 5px rgba(0, 0, 0, 0.08), 
-                inset -2px -2px 5px rgba(255, 255, 255, 0.6);
-            transition: transform 0.06s ease-out;
-        }
-
-        .tab-btn.active {
-            background: rgba(255, 255, 255, 0.9);
-            border-color: rgba(0, 0, 0, 0.15);
-            color: #0f172a;
-            box-shadow: 
-                inset 1px 1px 2px rgba(255, 255, 255, 1),
-                0 3px 8px rgba(0, 0, 0, 0.05);
-        }
-
-        /* 🌪️ АНИМАЦИЯ СКРЕТЧИНГА */
-        .scratch-effect {
-            animation: scratch 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-        }
-
-        @keyframes scratch {
-            0% { opacity: 0; transform: scale(0.96) translateY(12px); filter: blur(5px); }
-            100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
-        }
-
-        .schedule-content { margin-top: 15px; }
-
-        .schedule-header {
-            display: flex;
-            justify-content: space-between;
             align-items: center;
+        }
+
+        /* 🟢 ЖИДКИЙ ЗАДНИЙ ФОН БЕЗ ОСТРЫХ УГЛОВ */
+        .liquid-flag-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(74, 222, 128, 0.4), rgba(34, 197, 94, 0.2));
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            
+            /* Скругление углов, создающее эффект капли */
+            border-radius: 30px;
+            border: 2.5px solid rgba(255, 255, 255, 0.6);
+            
+            box-shadow: 
+                inset 0 0 30px rgba(255, 255, 255, 0.5),
+                0 15px 35px rgba(34, 197, 94, 0.08);
+            
+            /* Медленная плавная анимация колыхания флага */
+            animation: flagWaveAnimation 12s ease-in-out infinite alternate;
+            z-index: 1;
+        }
+
+        /* 👑 СЛОЙ С КОНТЕНТОМ (ПОВЕРХ ФОНА) */
+        .content-layer {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* Тоже колышется синхронно с каплей */
+            animation: flagWaveAnimation 12s ease-in-out infinite alternate;
+        }
+
+        /* ✨ ЗАКРУГЛЕННЫЙ ЗАГОЛОВОК С ЗОЛОТЫМ СИЯНИЕМ */
+        .shining-text {
+            font-size: clamp(28px, 5vw, 52px); 
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: clamp(2px, 0.8vw, 6px);
+            margin: 10px 0 25px 0;
+            text-align: center;
+            user-select: none;
+            
+            /* Золотой перелив */
+            background: linear-gradient(
+                to right, 
+                #b45309 0%, 
+                #f59e0b 25%, 
+                #fef08a 50%, 
+                #f59e0b 75%, 
+                #b45309 100%
+            );
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            
+            filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.05));
+            animation: goldShine 3s linear infinite;
+        }
+
+        /* 📅 АДАПТИВНАЯ СЕТКА ДЛЯ ДНЕЙ НЕДЕЛИ (Умный Grid) */
+        .schedule-grid {
+            display: grid;
+            width: 100%;
+            gap: 15px;
+            /* На ПК автоматически создается 3 колонки, если место позволяет */
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            box-sizing: border-box;
+            padding: 10px;
+        }
+
+        /* 📋 КАРТОЧКА ОДНОГО ДНЯ */
+        .day-card {
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 18px; /* Гладкие закругленные углы */
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.02);
+            transition: transform 0.3s ease;
+        }
+
+        .day-card:hover {
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.6);
+        }
+
+        /* НАЗВАНИЕ ДНЯ НЕДЕЛИ */
+        .day-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #166534; /* Темно-зеленый минималистичный цвет */
+            margin-top: 0;
             margin-bottom: 12px;
+            border-bottom: 2px solid rgba(34, 197, 94, 0.3);
+            padding-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .schedule-header h2 { margin: 0; font-size: 18px; font-weight: 600; color: #0f172a; }
-
-        .lessons-count {
-            font-size: 11px;
-            background: rgba(0, 0, 0, 0.05);
-            padding: 3px 10px;
-            border-radius: 20px;
-            color: #475569;
-            font-weight: 500;
+        /* СПИСОК УРОКОВ */
+        .lesson-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
         }
-
-        .lessons-list { display: flex; flex-direction: column; gap: 8px; }
 
         .lesson-item {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            background: rgba(255, 255, 255, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            padding: 12px 16px;
-            border-radius: 12px;
-            transition: transform 0.2s ease, background 0.2s;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            font-size: 15px;
         }
 
-        .lesson-item:hover { transform: translateX(4px); background: rgba(255, 255, 255, 0.6); }
-        .lesson-num { font-size: 13px; font-weight: 700; color: #94a3b8; width: 25px; }
-        .lesson-info { flex: 1; }
-        .lesson-name { font-weight: 500; font-size: 14px; color: #1e293b; margin-bottom: 1px; }
-        .lesson-time { font-size: 11px; color: #64748b; }
+        .lesson-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Время урока */
+        .lesson-time {
+            font-weight: 600;
+            color: #64748b;
+            font-size: 13px;
+            background: rgba(255, 255, 255, 0.6);
+            padding: 2px 6px;
+            border-radius: 6px;
+        }
+
+        /* Название предмета */
+        .lesson-name {
+            font-weight: 500;
+            color: #1e293b;
+            text-align: right;
+        }
+
+        /* 🏴‍☠️ СИНХРОННАЯ АНИМАЦИЯ ВОЛНЫ ФЛАГА ДЛЯ ВСЕГО ИНТЕРФЕЙСА */
+        @keyframes flagWaveAnimation {
+            0% {
+                border-radius: 30px 45px 35px 50px;
+                transform: rotateX(3deg) rotateY(-3deg) skewX(-2deg) translateY(0px);
+            }
+            50% {
+                border-radius: 40px 35px 45px 35px;
+                transform: rotateX(0deg) rotateY(0deg) skewX(0deg) translateY(-4px);
+            }
+            100% {
+                border-radius: 35px 50px 30px 45px;
+                transform: rotateX(-3deg) rotateY(3deg) skewX(2deg) translateY(4px);
+            }
+        }
+
+        /* Анимация золотого луча */
+        @keyframes goldShine {
+            0% { background-position: 200% center; }
+            100% { background-position: 0% center; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="glass-panel">
-        <div class="toolbar">
-            <div class="toolbar-row">
-                <!-- Бесконечный выбор года -->
-                <div class="select-wrapper">
-                    <label>Учебный Год</label>
-                    <select id="yearSelect" onchange="updateWeeks(); triggerScratch();">
-                        <!-- Года сгенерируются через JS автоматичеки -->
-                    </select>
-                </div>
+    <!-- Главная подстраивающаяся обертка -->
+    <div class="wave-wrapper">
+        
+        <!-- Живой текучий задний фон флага -->
+        <div class="liquid-flag-bg"></div>
+        
+        <!-- Контент расписания поверх фона -->
+        <div class="content-layer">
+            
+            <!-- Огромная сияющая надпись -->
+            <h1 class="shining-text">Bilim Class</h1>
+            
+            <!-- Сетка с днями недели -->
+            <div class="schedule-grid">
                 
-                <!-- Выбор недели с датами Пн - Сб -->
-                <div class="select-wrapper">
-                    <label>Период недели</label>
-                    <select id="weekSelect" onchange="triggerScratch()">
-                        <!-- Даты недель сгенерируются программно -->
-                    </select>
+                <!-- ПОНЕДЕЛЬНИК -->
+                <div class="day-card">
+                    <h2 class="day-title">Понедельник</h2>
+                    <ul class="lesson-list">
+                        <li class="lesson-item"><span class="lesson-time">08:00</span><span class="lesson-name">Математика</span></li>
+                        <li class="lesson-item"><span class="lesson-time">08:55</span><span class="lesson-name">Казахский язык</span></li>
+                        <li class="lesson-item"><span class="lesson-time">09:55</span><span class="lesson-name">Русский язык</span></li>
+                        <li class="lesson-item"><span class="lesson-time">10:55</span><span class="lesson-name">Естествознание</span></li>
+                    </ul>
                 </div>
-            </div>
 
-            <!-- Дни недели сокращенные -->
-            <div>
-                <label>День недели</label>
-                <div class="days-tabs" id="daysContainer">
-                    <button class="tab-btn active" onclick="changeDay(0, this)">ПН</button>
-                    <button class="tab-btn" onclick="changeDay(1, this)">ВТ</button>
-                    <button class="tab-btn" onclick="changeDay(2, this)">СР</button>
-                    <button class="tab-btn" onclick="changeDay(3, this)">ЧТ</button>
-                    <button class="tab-btn" onclick="changeDay(4, this)">ПТ</button>
-                    <button class="tab-btn" onclick="changeDay(5, this)">СБ</button>
+                <!-- ВТОРНИК -->
+                <div class="day-card">
+                    <h2 class="day-title">Вторник</h2>
+                    <ul class="lesson-list">
+                        <li class="lesson-item"><span class="lesson-time">08:00</span><span class="lesson-name">Математика</span></li>
+                        <li class="lesson-item"><span class="lesson-time">08:55</span><span class="lesson-name">Литературное чтение</span></li>
+                        <li class="lesson-item"><span class="lesson-time">09:55</span><span class="lesson-name">Цифровая грамотность</span></li>
+                    </ul>
                 </div>
+
+                <!-- СРЕДА -->
+                <div class="day-card">
+                    <h2 class="day-title">Среда</h2>
+                    <ul class="lesson-list">
+                        <li class="lesson-item"><span class="lesson-time">08:00</span><span class="lesson-name">Математика</span></li>
+                        <li class="lesson-item"><span class="lesson-time">08:55</span><span class="lesson-name">Казахский язык</span></li>
+                        <li class="lesson-item"><span class="lesson-time">09:55</span><span class="lesson-name">Русский язык</span></li>
+                    </ul>
+                </div>
+
+                <!-- ЧЕТВЕРГ -->
+                <div class="day-card">
+                    <h2 class="day-title">Четверг</h2>
+                    <ul class="lesson-list">
+                        <li class="lesson-item"><span class="lesson-time">08:00</span><span class="lesson-name">Естествознание</span></li>
+                        <li class="lesson-item"><span class="lesson-time">08:55</span><span class="lesson-name">Литературное чтение</span></li>
+                        <li class="lesson-item"><span class="lesson-time">09:55</span><span class="lesson-name">Художественный труд</span></li>
+                    </ul>
+                </div>
+
+                <!-- ПЯТНИЦА -->
+                <div class="day-card">
+                    <h2 class="day-title">Пятница</h2>
+                    <ul class="lesson-list">
+                        <li class="lesson-item"><span class="lesson-time">08:00</span><span class="lesson-name">Математика</span></li>
+                        <li class="lesson-item"><span class="lesson-time">08:55</span><span class="lesson-name">Казахский язык</span></li>
+                        <li class="lesson-item"><span class="lesson-time">09:55</span><span class="lesson-name">Познание мира</span></li>
+                    </ul>
+                </div>
+
             </div>
         </div>
 
-        <div class="schedule-content scratch-effect" id="scheduleBox">
-            <div class="schedule-header">
-                <h2 id="currentDayTitle">Понедельник</h2>
-                <div class="lessons-count" id="lessonsCount">6 уроков</div>
-            </div>
-            <div class="lessons-list" id="lessonsList">
-                <!-- Сюда вставляются уроки -->
-            </div>
-        </div>
     </div>
 
-    <script>
-        const lessonsData = {
-            0: { name: "Понедельник", count: 6, list: ["Математика", "Казахский язык", "Русский язык", "Естествознание", "Цифровая грамотность", "Литературное чтение"] },
-            1: { name: "Вторник", count: 5, list: ["Английский язык", "Математика", "Познание мира", "Художественный труд", "Физическая культура"] },
-            2: { name: "Среда", count: 6, list: ["Казахский язык", "Математика", "Русский язык", "Музыка", "Литературное чтение", "Самопознание"] },
-            3: { name: "Четверг", count: 5, list: ["Математика", "Русский язык", "Естествознание", "Казахский язык", "Физическая культура"] },
-            4: { name: "Пятница", count: 5, list: ["Информатика", "Английский язык", "Литературное чтение", "Математика", "Физическая культура"] },
-            5: { name: "Суббота", count: 5, list: ["Олимпиада", "Проектная деятельность", "Шахматы", "Логика", "Робототехника"] }
-        };
-
-        const timeSlots = ["08:00 - 08:45", "08:55 - 09:40", "09:55 - 10:40", "10:55 - 11:40", "11:55 - 12:40", "12:50 - 13:35"];
-        const months = ["янв", "фев", "мар", "апр", "май", "июн", "июл", "авг", "сен", "окт", "ноя", "дек"];
-
-        // 1. ГЕНЕРАЦИЯ ГОДОВ ДО БЕСКОНЕЧНОСТИ (на 100 лет вперёд)
-        const yearSelect = document.getElementById('yearSelect');
-        const startYear = 2025;
-        for (let y = startYear; y <= startYear + 100; y++) {
-            let opt = document.createElement('option');
-            opt.value = y;
-            opt.innerText = `${y} - ${y + 1} год`;
-            if (y === 2026) opt.selected = true; // Текущий по умолчанию
-            yearSelect.appendChild(opt);
-        }
-
-        // 2. УМНАЯ ГЕНЕРАЦИЯ НЕДЕЛЬ С ДАТАМИ (Пн - Сб)
-        function updateWeeks() {
-            const weekSelect = document.getElementById('weekSelect');
-            weekSelect.innerHTML = '';
-            
-            const selectedYear = parseInt(yearSelect.value);
-            
-            // Находим первый понедельник сентября выбранного года
-            let startDate = new Date(selectedYear, 8, 1); // 1 сентября
-            while (startDate.getDay() !== 1) { 
-                startDate.setDate(startDate.getDate() + 1); 
-            }
-
-            // Генерируем 34 учебные недели
-            for (let i = 1; i <= 34; i++) {
-                let mon = new Date(startDate);
-                let sat = new Date(startDate);
-                sat.setDate(sat.getDate() + 5); // Суббота этой же недели
-
-                let monStr = `${mon.getDate()} ${months[mon.getMonth()]}`;
-                let satStr = `${sat.getDate()} ${months[sat.getMonth()]}`;
-
-                let opt = document.createElement('option');
-                opt.value = i;
-                opt.innerText = `Неделя ${i} (${monStr} — ${satStr})`;
-                weekSelect.appendChild(opt);
-
-                // Переходим к следующему понедельнику
-                startDate.setDate(startDate.getDate() + 7);
-            }
-        }
-
-        function renderSchedule(dayIdx) {
-            const dayData = lessonsData[dayIdx];
-            document.getElementById('currentDayTitle').innerText = dayData.name;
-            document.getElementById('lessonsCount').innerText = `${dayData.count} уроков`;
-
-            const listContainer = document.getElementById('lessonsList');
-            listContainer.innerHTML = '';
-
-            for (let i = 0; i < dayData.count; i++) {
-                const item = document.createElement('div');
-                item.className = 'lesson-item';
-                item.innerHTML = `
-                    <div class="lesson-num">${i + 1}</div>
-                    <div class="lesson-info">
-                        <div class="lesson-name">${dayData.list[i]}</div>
-                        <div class="lesson-time">${timeSlots[i]}</div>
-                    </div>
-                `;
-                listContainer.appendChild(item);
-            }
-        }
-
-        function changeDay(idx, btn) {
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            renderSchedule(idx);
-            triggerScratch();
-        }
-
-        function triggerScratch() {
-            const box = document.getElementById('scheduleBox');
-            box.classList.remove('scratch-effect');
-            void box.offsetWidth; 
-            box.classList.add('scratch-effect');
-        }
-
-        // Инициализация при первой загрузке
-        updateWeeks();
-        renderSchedule(0);
-    </script>
 </body>
 </html>
