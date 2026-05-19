@@ -5,62 +5,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BilimClass - Расписание</title>
     <style>
-        /* БАЗОВЫЕ НАСТРОЙКИ СТРАНИЦЫ */
+        /* БАЗОВЫЕ НАСТРОЙКИ — ПОЛНАЯ ПРОЗРАЧНОСТЬ */
         body {
             margin: 0;
-            padding: 20px;
+            padding: 10px;
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: linear-gradient(135deg, #0f172a, #1e1b4b, #2e1065);
-            min-height: 100vh;
-            color: #f8fafc;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            background: transparent !important; /* Убран любой задний фон */
+            color: #1e293b; /* Тёмный текст для светлого режима */
             box-sizing: border-box;
         }
 
-        /* 🔮 ПРОФЕССИОНАЛЬНОЕ МАТОВОЕ СТЕКЛО (ГЛАССМОРФИЗМ) */
+        /* 🔮 СВЕТЛОЕ МАТОВОЕ СТЕКЛО (ЧИСТЫЙ ГЛАССМОРФИЗМ) */
         .glass-panel {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 24px;
-            padding: 30px;
+            background: rgba(255, 255, 255, 0.4); /* Светлое прозрачное стекло */
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 20px;
+            padding: 20px;
             width: 100%;
-            max-width: 650px;
+            max-width: 600px;
+            margin: 0 auto;
             box-shadow: 
-                inset 1px 1px 2px rgba(255, 255, 255, 0.05),
-                0 20px 50px rgba(0, 0, 0, 0.3);
-            animation: panelAppear 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+                inset 1px 1px 3px rgba(255, 255, 255, 0.8),
+                0 10px 30px rgba(0, 0, 0, 0.04);
+            animation: panelAppear 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
         @keyframes panelAppear {
             0% {
                 opacity: 0;
-                transform: translateY(30px) scale(0.98);
-                filter: blur(10px);
+                transform: translateY(20px) scale(0.98);
             }
             100% {
                 opacity: 1;
                 transform: translateY(0) scale(1);
-                filter: blur(0);
             }
         }
 
-        /* ВЕРХНИЙ ТУЛБАР */
+        /* ТУЛБАР */
         .toolbar {
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            margin-bottom: 25px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            padding-bottom: 20px;
+            gap: 12px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+            padding-bottom: 15px;
         }
 
         .toolbar-row {
             display: flex;
-            gap: 15px;
+            gap: 12px;
             width: 100%;
         }
 
@@ -72,96 +67,92 @@
             display: block;
             font-size: 11px;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            color: rgba(255, 255, 255, 0.4);
-            margin-bottom: 6px;
+            letter-spacing: 0.5px;
+            color: #64748b;
+            margin-bottom: 4px;
             font-weight: 600;
         }
 
         select {
             width: 100%;
-            padding: 12px 16px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            color: #fff;
+            padding: 10px 14px;
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 10px;
+            color: #1e293b;
             font-size: 14px;
             outline: none;
             cursor: pointer;
             appearance: none;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition: all 0.2s ease;
         }
 
         select:focus {
-            background: rgba(255, 255, 255, 0.07);
-            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.9);
+            border-color: rgba(0, 0, 0, 0.2);
         }
 
         .days-tabs {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             overflow-x: auto;
-            padding: 5px 2px;
+            padding: 4px 2px;
         }
-
         .days-tabs::-webkit-scrollbar { height: 0px; }
 
-        /* 💧 КНОПКИ-КАПЛИ С ЭФФЕКТОМ ЖИДКОГО СТЕКЛА */
+        /* 💧 КНОПКИ С ЭФФЕКТОМ ЖИДКОГО СТЕКЛА */
         .tab-btn {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            padding: 12px 18px;
-            border-radius: 14px;
-            color: rgba(255, 255, 255, 0.6);
+            flex: 1;
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            padding: 10px 0;
+            border-radius: 10px;
+            color: #64748b;
             cursor: pointer;
             font-size: 13px;
-            font-weight: 500;
-            white-space: nowrap;
-            position: relative;
-            overflow: hidden;
+            font-weight: 600;
+            text-align: center;
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
                         background 0.3s, border-color 0.3s, box-shadow 0.4s, color 0.3s;
             transform-origin: center bottom;
         }
 
         .tab-btn:hover {
-            color: #fff;
-            background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(255, 255, 255, 0.15);
+            color: #1e293b;
+            background: rgba(255, 255, 255, 0.7);
+            border-color: rgba(0, 0, 0, 0.12);
         }
 
-        /* Физическое сплющивание жидкого стекла при нажатии */
+        /* Надавливание и всплющивание (Эффект жидкости при клике) */
         .tab-btn:active {
-            transform: scale(1.06, 0.88); 
-            background: rgba(255, 255, 255, 0.01);
-            border-color: rgba(255, 255, 255, 0.05);
+            transform: scale(1.08, 0.85); /* Сплющивание по вертикали, расширение по бокам */
+            background: rgba(255, 255, 255, 0.2);
             box-shadow: 
-                inset 4px 4px 8px rgba(0, 0, 0, 0.5), 
-                inset -4px -4px 8px rgba(255, 255, 255, 0.05);
-            color: rgba(255, 255, 255, 0.4);
-            transition: transform 0.08s ease-out, box-shadow 0.08s ease-out;
+                inset 2px 2px 5px rgba(0, 0, 0, 0.08), 
+                inset -2px -2px 5px rgba(255, 255, 255, 0.6);
+            transition: transform 0.06s ease-out;
         }
 
-        /* Скрытый неоморфизм: мягкое вдавливание активной вкладки */
+        /* Активная вкладка (Едва заметный, но ощутимый неоморфизм) */
         .tab-btn.active {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.25);
-            color: #fff;
+            background: rgba(255, 255, 255, 0.9);
+            border-color: rgba(0, 0, 0, 0.15);
+            color: #0f172a;
             box-shadow: 
-                inset 1px 1px 2px rgba(255, 255, 255, 0.2),
-                0 4px 12px rgba(0, 0, 0, 0.15);
+                inset 1px 1px 2px rgba(255, 255, 255, 1),
+                0 3px 8px rgba(0, 0, 0, 0.05);
         }
 
-        /* 🌪️ ЭФФЕКТ СКРЕТЧИНГА ПРИ ОБНОВЛЕНИИ */
+        /* 🌪️ АНИМАЦИЯ СКРЕТЧИНГА (ПЛАВНОЕ ВЫСКАБЛИВАНИЕ) */
         .scratch-effect {
-            animation: scratch 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            animation: scratch 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
         }
 
         @keyframes scratch {
             0% {
                 opacity: 0;
-                transform: scale(0.95) translateY(15px);
-                filter: blur(6px);
+                transform: scale(0.96) translateY(12px);
+                filter: blur(5px);
             }
             100% {
                 opacity: 1;
@@ -170,60 +161,60 @@
             }
         }
 
-        /* БЛОК С РАСПИСАНИЕМ */
+        /* КОНТЕНТ РАСПИСАНИЯ */
         .schedule-content {
-            margin-top: 20px;
+            margin-top: 15px;
         }
 
         .schedule-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .schedule-header h2 {
             margin: 0;
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 600;
+            color: #0f172a;
         }
 
         .lessons-count {
-            font-size: 12px;
-            background: rgba(255, 255, 255, 0.06);
-            padding: 4px 12px;
+            font-size: 11px;
+            background: rgba(0, 0, 0, 0.05);
+            padding: 3px 10px;
             border-radius: 20px;
-            color: rgba(255, 255, 255, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            color: #475569;
+            font-weight: 500;
         }
 
         .lessons-list {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
         }
 
         .lesson-item {
             display: flex;
             align-items: center;
-            background: rgba(255, 255, 255, 0.01);
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            padding: 14px 18px;
-            border-radius: 14px;
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.2s;
+            background: rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            padding: 12px 16px;
+            border-radius: 12px;
+            transition: transform 0.2s ease, background 0.2s;
         }
 
         .lesson-item:hover {
-            transform: translateX(6px) scale(1.01);
-            background: rgba(255, 255, 255, 0.04);
-            border-color: rgba(255, 255, 255, 0.08);
+            transform: translateX(4px);
+            background: rgba(255, 255, 255, 0.6);
         }
 
         .lesson-num {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 700;
-            color: rgba(255, 255, 255, 0.25);
-            width: 30px;
+            color: #94a3b8;
+            width: 25px;
         }
 
         .lesson-info {
@@ -232,13 +223,14 @@
 
         .lesson-name {
             font-weight: 500;
-            font-size: 15px;
-            margin-bottom: 2px;
+            font-size: 14px;
+            color: #1e293b;
+            margin-bottom: 1px;
         }
 
         .lesson-time {
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.35);
+            font-size: 11px;
+            color: #64748b;
         }
     </style>
 </head>
@@ -246,8 +238,8 @@
 
     <div class="glass-panel">
         <div class="toolbar">
-            <!-- Первая строчка: Выбор года до 2027 -->
             <div class="toolbar-row">
+                <!-- Год до 2027 -->
                 <div class="select-wrapper">
                     <label>Учебный Год</label>
                     <select id="yearSelect" onchange="triggerScratch()">
@@ -256,43 +248,43 @@
                     </select>
                 </div>
                 
-                <!-- Выбор недели на год (34 недели) -->
+                <!-- Недели -->
                 <div class="select-wrapper">
                     <label>Учебная неделя</label>
                     <select id="weekSelect" onchange="triggerScratch()">
-                        <!-- Генерируется через скрипт ниже -->
+                        <!-- Авто-генерация недель через JS -->
                     </select>
                 </div>
             </div>
 
-            <!-- Вторая строчка: Дни с Понедельника по Субботу -->
+            <!-- Дни недели строго в нужном формате: ПН ВТ СР ЧТ ПТ СБ -->
             <div>
                 <label>День недели</label>
                 <div class="days-tabs" id="daysContainer">
-                    <button class="tab-btn active" onclick="changeDay(0, this)">Пон</button>
-                    <button class="tab-btn" onclick="changeDay(1, this)">Вто</button>
-                    <button class="tab-btn" onclick="changeDay(2, this)">Сре</button>
-                    <button class="tab-btn" onclick="changeDay(3, this)">Чет</button>
-                    <button class="tab-btn" onclick="changeDay(4, this)">Пят</button>
-                    <button class="tab-btn" onclick="changeDay(5, this)">Суб</button>
+                    <button class="tab-btn active" onclick="changeDay(0, this)">ПН</button>
+                    <button class="tab-btn" onclick="changeDay(1, this)">ВТ</button>
+                    <button class="tab-btn" onclick="changeDay(2, this)">СР</button>
+                    <button class="tab-btn" onclick="changeDay(3, this)">ЧТ</button>
+                    <button class="tab-btn" onclick="changeDay(4, this)">ПТ</button>
+                    <button class="tab-btn" onclick="changeDay(5, this)">СБ</button>
                 </div>
             </div>
         </div>
 
-        <!-- Контент с уроками -->
+        <!-- Сетка уроков -->
         <div class="schedule-content scratch-effect" id="scheduleBox">
             <div class="schedule-header">
                 <h2 id="currentDayTitle">Понедельник</h2>
                 <div class="lessons-count" id="lessonsCount">6 уроков</div>
             </div>
             <div class="lessons-list" id="lessonsList">
-                <!-- Рендерится из JS -->
+                <!-- Сюда инжектируются уроки -->
             </div>
         </div>
     </div>
 
     <script>
-        // Данные: Пн и Ср по 6 уроков, остальные по 5
+        // Данные уроков (Пн и Ср по 6 уроков, остальные по 5)
         const lessonsData = {
             0: { name: "Понедельник", count: 6, list: ["Математика", "Казахский язык", "Русский язык", "Естествознание", "Цифровая грамотность", "Литературное чтение"] },
             1: { name: "Вторник", count: 5, list: ["Английский язык", "Математика", "Познание мира", "Художественный труд", "Физическая культура"] },
@@ -304,7 +296,7 @@
 
         const timeSlots = ["08:00 - 08:45", "08:55 - 09:40", "09:55 - 10:40", "10:55 - 11:40", "11:55 - 12:40", "12:50 - 13:35"];
 
-        // Наполнение селектора недель (от 1 до 34)
+        // Наполнение списка недель (1-34)
         const weekSelect = document.getElementById('weekSelect');
         for (let i = 1; i <= 34; i++) {
             let opt = document.createElement('option');
@@ -314,7 +306,7 @@
             weekSelect.appendChild(opt);
         }
 
-        // Вывод списка уроков на экран
+        // Рендеринг данных на страницу
         function renderSchedule(dayIdx) {
             const dayData = lessonsData[dayIdx];
             document.getElementById('currentDayTitle').innerText = dayData.name;
@@ -326,7 +318,6 @@
             for (let i = 0; i < dayData.count; i++) {
                 const item = document.createElement('div');
                 item.className = 'lesson-item';
-                item.style.animationDelay = `${i * 0.04}s`;
                 item.innerHTML = `
                     <div class="lesson-num">${i + 1}</div>
                     <div class="lesson-info">
@@ -338,7 +329,7 @@
             }
         }
 
-        // Клик по дням недели
+        // Клик на табы дней недели
         function changeDay(idx, btn) {
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
@@ -346,15 +337,15 @@
             triggerScratch();
         }
 
-        // Запуск скретчинг-эффекта появления
+        // Запуск скретчинг-эффекта
         function triggerScratch() {
             const box = document.getElementById('scheduleBox');
             box.classList.remove('scratch-effect');
-            void box.offsetWidth; 
+            void box.offsetWidth; // Магический сброс анимации в браузере
             box.classList.add('scratch-effect');
         }
 
-        // Первичный запуск при старте страницы
+        // Старт
         renderSchedule(0);
     </script>
 </body>
