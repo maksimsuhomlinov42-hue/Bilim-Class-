@@ -320,23 +320,23 @@
                             <div class="lesson-homework">ДЗ</div>
                         </li>
                         <li class="lesson-item">
-                            <div class="lesson-top"><span class="lesson-time">08:55</span><span class="lesson-name">Казахский язык</span></div>
+                            <div class="lesson-top"><span class="lesson-time">08:55</span><span class="lesson-name">Русский язык</span></div>
                             <div class="lesson-homework">ДЗ</div>
                         </li>
                         <li class="lesson-item">
-                            <div class="lesson-top"><span class="lesson-time">09:55</span><span class="lesson-name">Русский язык</span></div>
+                            <div class="lesson-top"><span class="lesson-time">09:55</span><span class="lesson-name">Физическая культура</span></div>
                             <div class="lesson-homework">ДЗ</div>
                         </li>
                         <li class="lesson-item">
-                            <div class="lesson-top"><span class="lesson-time">10:55</span><span class="lesson-name">Естествознание</span></div>
+                            <div class="lesson-top"><span class="lesson-time">10:55</span><span class="lesson-name">Музыка</span></div>
                             <div class="lesson-homework">ДЗ</div>
                         </li>
                         <li class="lesson-item">
-                            <div class="lesson-top"><span class="lesson-time">11:50</span><span class="lesson-name">Литературное чтение</span></div>
+                            <div class="lesson-top"><span class="lesson-time">11:50</span><span class="lesson-name">Изобразительное искусство</span></div>
                             <div class="lesson-homework">ДЗ</div>
                         </li>
                         <li class="lesson-item">
-                            <div class="lesson-top"><span class="lesson-time">12:45</span><span class="lesson-name">Информатика</span></div>
+                            <div class="lesson-top"><span class="lesson-time">12:45</span><span class="lesson-name">Классный час</span></div>
                             <div class="lesson-homework">ДЗ</div>
                         </li>
                     </ul>
@@ -351,19 +351,19 @@
                             <div class="lesson-homework">ДЗ</div>
                         </li>
                         <li class="lesson-item">
-                            <div class="lesson-top"><span class="lesson-time">08:55</span><span class="lesson-name">Литературное чтение</span></div>
+                            <div class="lesson-top"><span class="lesson-time">08:55</span><span class="lesson-name">Английский язык</span></div>
                             <div class="lesson-homework">ДЗ</div>
                         </li>
                         <li class="lesson-item">
-                            <div class="lesson-top"><span class="lesson-time">09:55</span><span class="lesson-name">Цифровая грамотность</span></div>
+                            <div class="lesson-top"><span class="lesson-time">09:55</span><span class="lesson-name">Литературное чтение</span></div>
                             <div class="lesson-homework">ДЗ</div>
                         </li>
                         <li class="lesson-item">
-                            <div class="lesson-top"><span class="lesson-time">10:55</span><span class="lesson-name">Русский язык</span></div>
+                            <div class="lesson-top"><span class="lesson-time">10:55</span><span class="lesson-name">Казахский язык</span></div>
                             <div class="lesson-homework">ДЗ</div>
                         </li>
                         <li class="lesson-item">
-                            <div class="lesson-top"><span class="lesson-time">11:50</span><span class="lesson-name">Физкультура</span></div>
+                            <div class="lesson-top"><span class="lesson-time">11:50</span><span class="lesson-name">Физическая культура</span></div>
                             <div class="lesson-homework">ДЗ</div>
                         </li>
                     </ul>
@@ -374,50 +374,54 @@
                     <h2 class="day-title">Среда <span class="day-date" id="date-3"></span></h2>
                     <ul class="lesson-list">
                         <li class="lesson-item">
-                            <div class="lesson-top"><span class="lesson-time">08:00</span><span class="lesson-name">Математика</span></div>
+                            <div class="lesson-top"><span class="lesson-time">08:00</span><span class="lesson-name">Русский язык</span></div>
                             <div class="lesson-homework">ДЗ</div>
                         </li>
                         <li class="lesson-item">
-                            <div class="lesson-top"><span class="lesson-time">08:55</span><span class="lesson-name">Казахский язык</span></div>
+                            <div class="lesson-top"><span class="lesson-time">08:55</span><span class="lesson-name">Цифровая грамотность</span></div>
                             <div class="lesson-homework">ДЗ</div>
                         </li>
                         <li class="lesson-item">
-                            <div class="lesson-top"><span class="lesson-time">09:55</span><span class="lesson-name">Русский язык</span></div>
+                            <div class="lesson-top"><span class="lesson-time">09:55</span><span class="lesson-name">Математика</span></div>
                             <div class="lesson-homework">ДЗ</div>
                         </li>
                         <li class="lesson-item">
-                            <div class="lesson-top"><span class="lesson-time">10:55</span><span class="lesson-name">Английский язык</span></div>
+                            <div class="lesson-top"><span class="lesson-time">10:55</span><span class="lesson-name">Казахский язык</span></div>
                             <div class="lesson-homework">ДЗ</div>
                         </li>
                         <li class="lesson-item">
-                            <div class="lesson-top"><span class="lesson-time">11:50</span><span class="lesson-name">Естествознание</span></div>
+                            <div class="lesson-top"><span class="lesson-time">11:50</span><span class="lesson-name">Литературное чтение</span></div>
                             <div class="lesson-homework">ДЗ</div>
                         </li>
                         <li class="lesson-item">
-                            <div class="lesson-top"><span class="lesson-time">12:45</span><span class="lesson-name">Самопознание</span></div>
+                            <div class="lesson-top"><span class="lesson-time">12:45</span><span class="lesson-name">Познание мира</span></div>
                             <div class="lesson-homework">ДЗ</div>
                         </li>
                     </ul>
                 </div>
 
-                <!-- ЧТ (5 УРОКОВ) -->
+                <!-- ЧТ (6 УРОКОВ) -->
                 <div class="day-card" id="day-4">
                     <h2 class="day-title">Четверг <span class="day-date" id="date-4"></span></h2>
                     <ul class="lesson-list">
                         <li class="lesson-item">
-                            <div class="lesson-top"><span class="lesson-time">08:00</span><span class="lesson-name">Естествознание</span></div>
+                            <div class="lesson-top"><span class="lesson-time">08:00</span><span class="lesson-name">Русский язык</span></div>
                             <div class="lesson-homework">ДЗ</div>
                         </li>
                         <li class="lesson-item">
-                            <div class="lesson-top"><span class="lesson-time">08:55</span><span class="lesson-name">Литературное чтение</span></div>
+                            <div class="lesson-top"><span class="lesson-time">08:55</span><span class="lesson-name">Математика</span></div>
                             <div class="lesson-homework">ДЗ</div>
                         </li>
                         <li class="lesson-item">
-                            <div class="lesson-top"><span class="lesson-time">09:55</span><span class="lesson-name">Художественный труд</span></div>
+                            <div class="lesson-top"><span class="lesson-time">09:55</span><span class="lesson-name">Английский язык</span></div>
                             <div class="lesson-homework">ДЗ</div>
                         </li>
                         <li class="lesson-item">
-                            <div class="lesson-top"><span class="lesson-time">10:55</span><span class="lesson-name">Математика</span></div>
+                            <div class="lesson-top"><span class="lesson-time">10:55</span><span class="lesson-name">Литературное чтение</span></div>
+                            <div class="lesson-homework">ДЗ</div>
+                        </li>
+                        <li class="lesson-item">
+                            <div class="lesson-top"><span class="lesson-time">11:50</span><span class="lesson-name">Естествознание</span></div>
                             <div class="lesson-homework">ДЗ</div>
                         </li>
                         <li class="lesson-item">
@@ -432,23 +436,23 @@
                     <h2 class="day-title">Пятница <span class="day-date" id="date-5"></span></h2>
                     <ul class="lesson-list">
                         <li class="lesson-item">
-                            <div class="lesson-top"><span class="lesson-time">08:00</span><span class="lesson-name">Математика</span></div>
+                            <div class="lesson-top"><span class="lesson-time">08:00</span><span class="lesson-name">Русский язык</span></div>
                             <div class="lesson-homework">ДЗ</div>
                         </li>
                         <li class="lesson-item">
-                            <div class="lesson-top"><span class="lesson-time">08:55</span><span class="lesson-name">Казахский язык</span></div>
+                            <div class="lesson-top"><span class="lesson-time">08:55</span><span class="lesson-name">Математика</span></div>
                             <div class="lesson-homework">ДЗ</div>
                         </li>
                         <li class="lesson-item">
-                            <div class="lesson-top"><span class="lesson-time">09:55</span><span class="lesson-name">Познание мира</span></div>
+                            <div class="lesson-top"><span class="lesson-time">09:55</span><span class="lesson-name">Казахский язык</span></div>
                             <div class="lesson-homework">ДЗ</div>
                         </li>
                         <li class="lesson-item">
-                            <div class="lesson-top"><span class="lesson-time">10:55</span><span class="lesson-name">Музыка</span></div>
+                            <div class="lesson-top"><span class="lesson-time">10:55</span><span class="lesson-name">Физическая культура </span></div>
                             <div class="lesson-homework">ДЗ</div>
                         </li>
                         <li class="lesson-item">
-                            <div class="lesson-top"><span class="lesson-time">11:50</span><span class="lesson-name">Русский язык</span></div>
+                            <div class="lesson-top"><span class="lesson-time">11:50</span><span class="lesson-name">Трудовое обучение</span></div>
                             <div class="lesson-homework">ДЗ</div>
                         </li>
                     </ul>
