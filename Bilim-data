@@ -294,12 +294,18 @@
                 <div class="day-card" id="day-1">
                     <h2 class="day-title">Понедельник <span class="day-date" id="date-1"></span></h2>
                     <ul class="lesson-list">
-                        <li class="lesson-item"><span class="lesson-time">08:00</span><span class="lesson-name">Математика</span></li>
-                        <li class="lesson-item"><span class="lesson-time">08:55</span><span class="lesson-name">Казахский язык</span></li>
-                        <li class="lesson-item"><span class="lesson-time">09:55</span><span class="lesson-name">Русский язык</span></li>
-                        <li class="lesson-item"><span class="lesson-time">10:55</span><span class="lesson-name">Естествознание</span></li>
-                        <li class="lesson-item"><span class="lesson-time">11:50</span><span class="lesson-name">Литературное чтение</span></li>
-                        <li class="lesson-item"><span class="lesson-time">12:45</span><span class="lesson-name">Информатика</span></li>
+                        <li class="lesson-item"><span class="lesson-time">12:55 - 13:35 
+114 - Кабинет начальных классов</span><span class="lesson-name">Математика</span></li>
+                        <li class="lesson-item"><span class="lesson-time">13:40 - 14:20 
+114 - Кабинет начальных классов</span><span class="lesson-name">Русский язык</span></li>
+                        <li class="lesson-item"><span class="lesson-time">14:30 - 15:10 
+215 - Спортивный зал</span><span class="lesson-name">Физическая культура</span></li>
+                        <li class="lesson-item"><span class="lesson-time">15:25 - 16:05 
+301 - Кабинет музыки</span><span class="lesson-name">Музыка</span></li>
+                        <li class="lesson-item"><span class="lesson-time">16:15 - 16:55 
+114 - Кабинет начальных классов</span><span class="lesson-name">Изобразительное искусство</span></li>
+                        <li class="lesson-item"><span class="lesson-time">17:00 - 17:40 
+114 - Кабинет начальных классов</span><span class="lesson-name">Классный язык</span></li>
                     </ul>
                 </div>
 
@@ -307,11 +313,16 @@
                 <div class="day-card" id="day-2">
                     <h2 class="day-title">Вторник <span class="day-date" id="date-2"></span></h2>
                     <ul class="lesson-list">
-                        <li class="lesson-item"><span class="lesson-time">08:00</span><span class="lesson-name">Математика</span></li>
-                        <li class="lesson-item"><span class="lesson-time">08:55</span><span class="lesson-name">Литературное чтение</span></li>
-                        <li class="lesson-item"><span class="lesson-time">09:55</span><span class="lesson-name">Цифровая грамотность</span></li>
-                        <li class="lesson-item"><span class="lesson-time">10:55</span><span class="lesson-name">Русский язык</span></li>
-                        <li class="lesson-item"><span class="lesson-time">11:50</span><span class="lesson-name">Физкультура</span></li>
+                        <li class="lesson-item"><span class="lesson-time">12:55 - 13:35 
+114 - Кабинет начальных классов</span><span class="lesson-name">Математика</span></li>
+                        <li class="lesson-item"><span class="lesson-time">13:40 - 14:20 
+114 - Кабинет начальных классов</span><span class="lesson-name">Английский язык</span></li>
+                        <li class="lesson-item"><span class="lesson-time">14:30 - 15:10 
+114 - Кабинет начальных классов</span><span class="lesson-name">Литературное чтение</span></li>
+                        <li class="lesson-item"><span class="lesson-time">15:25 - 16:05 
+114 - Кабинет начальных классов</span><span class="lesson-name">Казахский язык</span></li>
+                        <li class="lesson-item"><span class="lesson-time">16:15 - 16:55 
+215 - Спортивный зал</span><span class="lesson-name">Физическая культура</span></li>
                     </ul>
                 </div>
 
@@ -319,24 +330,38 @@
                 <div class="day-card" id="day-3">
                     <h2 class="day-title">Среда <span class="day-date" id="date-3"></span></h2>
                     <ul class="lesson-list">
-                        <li class="lesson-item"><span class="lesson-time">08:00</span><span class="lesson-name">Математика</span></li>
-                        <li class="lesson-item"><span class="lesson-time">08:55</span><span class="lesson-name">Казахский язык</span></li>
-                        <li class="lesson-item"><span class="lesson-time">09:55</span><span class="lesson-name">Русский язык</span></li>
-                        <li class="lesson-item"><span class="lesson-time">10:55</span><span class="lesson-name">Английский язык</span></li>
-                        <li class="lesson-item"><span class="lesson-time">11:50</span><span class="lesson-name">Естествознание</span></li>
-                        <li class="lesson-item"><span class="lesson-time">12:45</span><span class="lesson-name">Самопознание</span></li>
+                        <li class="lesson-item"><span class="lesson-time">12:10 - 12:50
+114 - Кабинет начальных классов</span><span class="lesson-name">Русский язык</span></li>
+                        <li class="lesson-item"><span class="lesson-time">12:55 - 13:35
+114 - Кабинет начальных классов</span><span class="lesson-name">Цифровая грамотность</span></li>
+                        <li class="lesson-item"><span class="lesson-time">13:45 - 14:25 
+114 - Кабинет начальных классов</span><span class="lesson-name">Математика</span></li>
+                        <li class="lesson-item"><span class="lesson-time">14:40 - 15:20
+114 - Кабинет начальных классов</span><span class="lesson-name">Казахский язык</span></li>
+                        <li class="lesson-item"><span class="lesson-time">15:30 - 16:55 
+114 - Кабинет начальных классов</span><span class="lesson-name">Литературное чтение</span></li>
+                        <li class="lesson-item"><span class="lesson-time">17:00 - 17:40 
+114 - Кабинет начальных классов</span><span class="lesson-name">Познание мира</span></li>
                     </ul>
                 </div>
 
-                <!-- ЧТ (5 УРОКОВ) -->
+                <!-- ЧТ (6 УРОКОВ) -->
                 <div class="day-card" id="day-4">
                     <h2 class="day-title">Четверг <span class="day-date" id="date-4"></span></h2>
                     <ul class="lesson-list">
-                        <li class="lesson-item"><span class="lesson-time">08:00</span><span class="lesson-name">Естествознание</span></li>
-                        <li class="lesson-item"><span class="lesson-time">08:55</span><span class="lesson-name">Литературное чтение</span></li>
-                        <li class="lesson-item"><span class="lesson-time">09:55</span><span class="lesson-name">Художественный труд</span></li>
-                        <li class="lesson-item"><span class="lesson-time">10:55</span><span class="lesson-name">Математика</span></li>
-                        <li class="lesson-item"><span class="lesson-time">11:50</span><span class="lesson-name">Казахский язык</span></li>
+                        <li class="lesson-item"><span class="lesson-time">12:55 - 13:35
+114 - Кабинет начальных классов</span><span class="lesson-name">Русский язык</span></li>
+                        <li class="lesson-item"><span class="lesson-time">13:40 - 14:20
+114 - Кабинет начальных классов</span><span class="lesson-name">Математика</span></li>
+                        <li class="lesson-item"><span class="lesson-time">14:30 - 15:10
+114 - Кабинет начальных классов</span><span class="lesson-name">Английский язык</span></li>
+                        <li class="lesson-item"><span class="lesson-time">15:25 - 16:05
+114 - Кабинет начальных классов</span><span class="lesson-name">Литературное чтение</span></li>
+                        <li class="lesson-item"><span class="lesson-time">16:15 - 16:55
+114 - Кабинет начальных классов
+</span><span class="lesson-name">Естествознание</span></li>
+                        <li class="lesson-item"><span class="lesson-time">17:00 - 17:40
+114 - Кабинет начальных классов</span><span class="lesson-name">Казахский язык</span></li>
                     </ul>
                 </div>
 
@@ -344,17 +369,22 @@
                 <div class="day-card" id="day-5">
                     <h2 class="day-title">Пятница <span class="day-date" id="date-5"></span></h2>
                     <ul class="lesson-list">
-                        <li class="lesson-item"><span class="lesson-time">08:00</span><span class="lesson-name">Математика</span></li>
-                        <li class="lesson-item"><span class="lesson-time">08:55</span><span class="lesson-name">Казахский язык</span></li>
-                        <li class="lesson-item"><span class="lesson-time">09:55</span><span class="lesson-name">Познание мира</span></li>
-                        <li class="lesson-item"><span class="lesson-time">10:55</span><span class="lesson-name">Музыка</span></li>
-                        <li class="lesson-item"><span class="lesson-time">11:50</span><span class="lesson-name">Русский язык</span></li>
+                        <li class="lesson-item"><span class="lesson-time">12:10 - 12:50
+114 - Кабинет начальных классов</span><span class="lesson-name">Русский язык</span></li>
+                        <li class="lesson-item"><span class="lesson-time">12:55 - 13:35
+114 - Кабинет начальных классов</span><span class="lesson-name">Математика</span></li>
+                        <li class="lesson-item"><span class="lesson-time">13:45 - 14:25
+114 - Кабинет начальных классов</span><span class="lesson-name">Казахский язык</span></li>
+                        <li class="lesson-item"><span class="lesson-time">14:40 - 15:20
+215 - Спортивный зал</span><span class="lesson-name">Физическая культура</span></li>
+                        <li class="lesson-item"><span class="lesson-time">15:30 - 16:55
+114 - Кабинет начальных классов</span><span class="lesson-name">Трудовое обучение</span></li>
                     </ul>
                 </div>
 
                 <!-- Карточка выходного дня -->
                 <div class="weekend-card" id="weekend-card">
-                    🎉 Сегодня выходной день! Уроков нет, отдыхай! Нажми на кнопки дней выше, чтобы посмотреть расписание.
+                    🎉 Сегодня выходной день!
                 </div>
 
             </div>
